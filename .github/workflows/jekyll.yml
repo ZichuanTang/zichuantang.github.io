@@ -1,8 +1,8 @@
-name: Deploy Jekyll site to pages
+name: Deploy Jekyll site to GitHub Pages
 
 on:
   push:
-    branches: [main]  # 或你的默认分支名
+    branches: [main] # 或你的默认分支
   workflow_dispatch:
 
 permissions:
@@ -18,26 +18,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout source
         uses: actions/checkout@v4
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1'  # 建议固定版本
+          ruby-version: '3.1' # 或其他你支持的版本
 
       - name: Install dependencies
         run: |
           gem install bundler
           bundle install
 
-      - name: Build site with Jekyll
+      - name: Build Jekyll site
         run: bundle exec jekyll build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./_site
+          path: _site
 
   deploy:
     needs: build
@@ -50,5 +50,5 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
         id: deployment
+        uses: actions/deploy-pages@v2
