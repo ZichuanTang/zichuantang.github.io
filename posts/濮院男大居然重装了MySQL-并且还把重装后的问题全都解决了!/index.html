@@ -1,0 +1,1649 @@
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- `site.alt_lang` can specify a language different from the UI -->
+<html lang="zh-CN" >
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
+  ><!-- Setup Open Graph image -->
+
+  
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="濮院男大居然重装了MySQL！并且还把重装后的问题全都解决了!" />
+<meta name="author" content="TangZichuan" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="事因MySQL好久没用了，如何点开就打不开了，密码一致错…如何决心重装！ 问ChatGPT把原本留下的能删的都删了，重装后输入这个指令一直报错： PS C:\Users\33261&gt; mysql -u root ERROR 2003 (HY000): Can’t connect to MySQL server on ‘localhost:3306’ (10061) 一直报这个错，一直报这个错… 这个看似是端口问题，所以， 使用 netstat 检查端口占用情况：确保 3306 端口没有被其他应用占用： 1 cmd 1 netstat -ano | findstr :3306 结果上面之后问了AI就来到了最最最关键的代码了， mysqld –skip-grant-tables –console 1 mysqld --skip-grant-tables --console 这个代码是检查你MySQL遇到的问题的（以我的理解），接下来是我一直输密码一直错，问题改密码的命令，有很多改密码的命令，但这个好像才适合我的MySQL 9.2.0，然后我就运行了，改了，好像没啥用，密码还是输了就错…所以这个应该不是很重要， 直接设置明文密码 在 MySQL 9.2.0 中， authentication_string 可以直接存储明文密码，MySQL 会自动处理加密。运行以下命令： sql 收起取消自动换行复制 1 UPDATE mysql.user SET authentication_string = &#39;123456&#39; WHERE User = &#39;root&#39; AND Host = &#39;localhost&#39;; 注意：这里去掉了 PASSWORD() 函数，直接用明文 ‘123456’。 ‘123456’ 是你要设置的新密码，可以替换成其他密码。 然后这个代码也试试， 1 2 3 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;; FLUSH PRIVILEGES; EXIT; 最后， 1 mysql -u root -p 总结，就是你也遇到这个问题， 1 2 PS C:\Users\33261&gt; mysql -u root ERROR 2003 (HY000): Can&#39;t connect to MySQL server on &#39;localhost:3306&#39; (10061) 你就先输入这个命令， 1 mysqld --skip-grant-tables --console 来查询你遇到的具体问题，把这些问题给AI，然后一个个解决。 这里面就很多，我举例几个： 你的MySQL文件夹下没用这个my.ini或者my.cnf文件，这个是配置文件，你就自己创建，并且这两个我试了很久最后放置的是这样， 这个my.ini里面是 1 2 3 4 5 6 [mysqld] port = 3306 bind-address = 0.0.0.0 skip-networking = 0 [mysqld] datadir = C:/Program Files/mysql-9.2.0-winx64/data 这个my.cnf里面是 1 2 3 4 5 [mysqld] port=3306 bind-address=127.0.0.1 # 或 0.0.0.0，如果需要远程访问 skip-networking=0 # 确保未禁用网络 datadir=&quot;C:\Program Files\mysql-9.2.0-winx64\data&quot; 我的这个文件”C:\Program Files\mysql-9.2.0-winx64\data\ibdata1”是要给完全控制的权限的！（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。并且还有这个文件”C:\Program Files\mysql-9.2.0-winx64\data”（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。 在你装的MySQL目录下C:\Program Files\mysql-9.2.0-winx64\data这里面找到这个文件.err文件，这里面就是一些报错日志，可以参考，发给AI… 如果权限正确但仍报错，可能是 ibdata1 被其他进程锁定： a. 打开“资源监视器”：按 Ctrl + Shift + Esc 打开任务管理器，点击“性能”选项卡，选择“资源监视器”。 b. 在“CPU”选项卡下，点击“关联的句柄”，搜索 ibdata1。 c. 如果有进程占用，结束该进程（通常是另一个 mysqld.exe 实例）。 还有就是检查MySQL服务是否启动， 启动MySQL： 1 net start mysql 关闭MySQL： 1 net stop mysql 按 Ctrl + Shift + Esc 打开任务管理器，点击“服务”选项卡，去找MySQL，去那里看是否有运行。 等等等等，许多许多各式各样的问题，这都是我遇到的，并一个个解决的，希望这篇能帮到你，让你少走点弯路，你避坑是我最痛苦的事情…OK，祝你不孕不育子孙满堂，谢谢(〃￣︶￣)人(￣︶￣〃) 注：以此篇记录我这一天痛苦的历程…" />
+<meta property="og:description" content="事因MySQL好久没用了，如何点开就打不开了，密码一致错…如何决心重装！ 问ChatGPT把原本留下的能删的都删了，重装后输入这个指令一直报错： PS C:\Users\33261&gt; mysql -u root ERROR 2003 (HY000): Can’t connect to MySQL server on ‘localhost:3306’ (10061) 一直报这个错，一直报这个错… 这个看似是端口问题，所以， 使用 netstat 检查端口占用情况：确保 3306 端口没有被其他应用占用： 1 cmd 1 netstat -ano | findstr :3306 结果上面之后问了AI就来到了最最最关键的代码了， mysqld –skip-grant-tables –console 1 mysqld --skip-grant-tables --console 这个代码是检查你MySQL遇到的问题的（以我的理解），接下来是我一直输密码一直错，问题改密码的命令，有很多改密码的命令，但这个好像才适合我的MySQL 9.2.0，然后我就运行了，改了，好像没啥用，密码还是输了就错…所以这个应该不是很重要， 直接设置明文密码 在 MySQL 9.2.0 中， authentication_string 可以直接存储明文密码，MySQL 会自动处理加密。运行以下命令： sql 收起取消自动换行复制 1 UPDATE mysql.user SET authentication_string = &#39;123456&#39; WHERE User = &#39;root&#39; AND Host = &#39;localhost&#39;; 注意：这里去掉了 PASSWORD() 函数，直接用明文 ‘123456’。 ‘123456’ 是你要设置的新密码，可以替换成其他密码。 然后这个代码也试试， 1 2 3 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;; FLUSH PRIVILEGES; EXIT; 最后， 1 mysql -u root -p 总结，就是你也遇到这个问题， 1 2 PS C:\Users\33261&gt; mysql -u root ERROR 2003 (HY000): Can&#39;t connect to MySQL server on &#39;localhost:3306&#39; (10061) 你就先输入这个命令， 1 mysqld --skip-grant-tables --console 来查询你遇到的具体问题，把这些问题给AI，然后一个个解决。 这里面就很多，我举例几个： 你的MySQL文件夹下没用这个my.ini或者my.cnf文件，这个是配置文件，你就自己创建，并且这两个我试了很久最后放置的是这样， 这个my.ini里面是 1 2 3 4 5 6 [mysqld] port = 3306 bind-address = 0.0.0.0 skip-networking = 0 [mysqld] datadir = C:/Program Files/mysql-9.2.0-winx64/data 这个my.cnf里面是 1 2 3 4 5 [mysqld] port=3306 bind-address=127.0.0.1 # 或 0.0.0.0，如果需要远程访问 skip-networking=0 # 确保未禁用网络 datadir=&quot;C:\Program Files\mysql-9.2.0-winx64\data&quot; 我的这个文件”C:\Program Files\mysql-9.2.0-winx64\data\ibdata1”是要给完全控制的权限的！（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。并且还有这个文件”C:\Program Files\mysql-9.2.0-winx64\data”（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。 在你装的MySQL目录下C:\Program Files\mysql-9.2.0-winx64\data这里面找到这个文件.err文件，这里面就是一些报错日志，可以参考，发给AI… 如果权限正确但仍报错，可能是 ibdata1 被其他进程锁定： a. 打开“资源监视器”：按 Ctrl + Shift + Esc 打开任务管理器，点击“性能”选项卡，选择“资源监视器”。 b. 在“CPU”选项卡下，点击“关联的句柄”，搜索 ibdata1。 c. 如果有进程占用，结束该进程（通常是另一个 mysqld.exe 实例）。 还有就是检查MySQL服务是否启动， 启动MySQL： 1 net start mysql 关闭MySQL： 1 net stop mysql 按 Ctrl + Shift + Esc 打开任务管理器，点击“服务”选项卡，去找MySQL，去那里看是否有运行。 等等等等，许多许多各式各样的问题，这都是我遇到的，并一个个解决的，希望这篇能帮到你，让你少走点弯路，你避坑是我最痛苦的事情…OK，祝你不孕不育子孙满堂，谢谢(〃￣︶￣)人(￣︶￣〃) 注：以此篇记录我这一天痛苦的历程…" />
+<link rel="canonical" href="https://zichuantang.github.io/posts/%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL-%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!/" />
+<meta property="og:url" content="https://zichuantang.github.io/posts/%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL-%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!/" />
+<meta property="og:site_name" content="子传的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-03-15T00:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="濮院男大居然重装了MySQL！并且还把重装后的问题全都解决了!" />
+<meta name="twitter:site" content="@twitter_username" />
+<meta name="twitter:creator" content="@TangZichuan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"TangZichuan"},"dateModified":"2025-03-15T00:00:00+08:00","datePublished":"2025-03-15T00:00:00+08:00","description":"事因MySQL好久没用了，如何点开就打不开了，密码一致错…如何决心重装！ 问ChatGPT把原本留下的能删的都删了，重装后输入这个指令一直报错： PS C:\\Users\\33261&gt; mysql -u root ERROR 2003 (HY000): Can’t connect to MySQL server on ‘localhost:3306’ (10061) 一直报这个错，一直报这个错… 这个看似是端口问题，所以， 使用 netstat 检查端口占用情况：确保 3306 端口没有被其他应用占用： 1 cmd 1 netstat -ano | findstr :3306 结果上面之后问了AI就来到了最最最关键的代码了， mysqld –skip-grant-tables –console 1 mysqld --skip-grant-tables --console 这个代码是检查你MySQL遇到的问题的（以我的理解），接下来是我一直输密码一直错，问题改密码的命令，有很多改密码的命令，但这个好像才适合我的MySQL 9.2.0，然后我就运行了，改了，好像没啥用，密码还是输了就错…所以这个应该不是很重要， 直接设置明文密码 在 MySQL 9.2.0 中， authentication_string 可以直接存储明文密码，MySQL 会自动处理加密。运行以下命令： sql 收起取消自动换行复制 1 UPDATE mysql.user SET authentication_string = &#39;123456&#39; WHERE User = &#39;root&#39; AND Host = &#39;localhost&#39;; 注意：这里去掉了 PASSWORD() 函数，直接用明文 ‘123456’。 ‘123456’ 是你要设置的新密码，可以替换成其他密码。 然后这个代码也试试， 1 2 3 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;; FLUSH PRIVILEGES; EXIT; 最后， 1 mysql -u root -p 总结，就是你也遇到这个问题， 1 2 PS C:\\Users\\33261&gt; mysql -u root ERROR 2003 (HY000): Can&#39;t connect to MySQL server on &#39;localhost:3306&#39; (10061) 你就先输入这个命令， 1 mysqld --skip-grant-tables --console 来查询你遇到的具体问题，把这些问题给AI，然后一个个解决。 这里面就很多，我举例几个： 你的MySQL文件夹下没用这个my.ini或者my.cnf文件，这个是配置文件，你就自己创建，并且这两个我试了很久最后放置的是这样， 这个my.ini里面是 1 2 3 4 5 6 [mysqld] port = 3306 bind-address = 0.0.0.0 skip-networking = 0 [mysqld] datadir = C:/Program Files/mysql-9.2.0-winx64/data 这个my.cnf里面是 1 2 3 4 5 [mysqld] port=3306 bind-address=127.0.0.1 # 或 0.0.0.0，如果需要远程访问 skip-networking=0 # 确保未禁用网络 datadir=&quot;C:\\Program Files\\mysql-9.2.0-winx64\\data&quot; 我的这个文件”C:\\Program Files\\mysql-9.2.0-winx64\\data\\ibdata1”是要给完全控制的权限的！（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。并且还有这个文件”C:\\Program Files\\mysql-9.2.0-winx64\\data”（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。 在你装的MySQL目录下C:\\Program Files\\mysql-9.2.0-winx64\\data这里面找到这个文件.err文件，这里面就是一些报错日志，可以参考，发给AI… 如果权限正确但仍报错，可能是 ibdata1 被其他进程锁定： a. 打开“资源监视器”：按 Ctrl + Shift + Esc 打开任务管理器，点击“性能”选项卡，选择“资源监视器”。 b. 在“CPU”选项卡下，点击“关联的句柄”，搜索 ibdata1。 c. 如果有进程占用，结束该进程（通常是另一个 mysqld.exe 实例）。 还有就是检查MySQL服务是否启动， 启动MySQL： 1 net start mysql 关闭MySQL： 1 net stop mysql 按 Ctrl + Shift + Esc 打开任务管理器，点击“服务”选项卡，去找MySQL，去那里看是否有运行。 等等等等，许多许多各式各样的问题，这都是我遇到的，并一个个解决的，希望这篇能帮到你，让你少走点弯路，你避坑是我最痛苦的事情…OK，祝你不孕不育子孙满堂，谢谢(〃￣︶￣)人(￣︶￣〃) 注：以此篇记录我这一天痛苦的历程…","headline":"濮院男大居然重装了MySQL！并且还把重装后的问题全都解决了!","mainEntityOfPage":{"@type":"WebPage","@id":"https://zichuantang.github.io/posts/%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL-%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!/"},"url":"https://zichuantang.github.io/posts/%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL-%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <title>濮院男大居然重装了MySQL！并且还把重装后的问题全都解决了! | 子传的博客
+  </title>
+
+  <!--
+  The Favicons for Web, Android, Microsoft, and iOS (iPhone and iPad) Apps
+  Generated by: https://realfavicongenerator.net/
+-->
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+
+  <link rel="manifest" href="/assets/img/favicons/site.webmanifest">
+
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<meta name="apple-mobile-web-app-title" content="子传的博客">
+<meta name="application-name" content="子传的博客">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+
+  <!-- Resource Hints -->
+  
+    
+      
+        <link rel="preconnect" href="https://fonts.googleapis.com" >
+      
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" >
+      
+    
+      
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" >
+      
+    
+      
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" >
+      
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" >
+      
+    
+  
+
+  <!-- Bootstrap -->
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/assets/css/jekyll-theme-chirpy.css">
+
+  <!-- Web Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro:wght@400;600;700;900&display=swap">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.1/css/all.min.css">
+
+  <!-- 3rd-party Dependencies -->
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.32.2/dist/tocbot.min.css">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.min.css">
+  
+
+  
+    <!-- Image Popup -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
+  
+
+  <!-- Scripts -->
+
+  <script src="/assets/js/dist/theme.min.js"></script>
+
+  <!-- JS selector for site. -->
+
+<!-- commons -->
+
+
+
+<!-- layout specified -->
+
+
+  
+
+  
+    <!-- image lazy-loading & popup & clipboard -->
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.13/dayjs.min.js,npm/dayjs@1.11.13/locale/zh.js,npm/dayjs@1.11.13/plugin/relativeTime.js,npm/dayjs@1.11.13/plugin/localizedFormat.js,npm/mermaid@11.4.0/dist/mermaid.min.js"></script>
+
+
+
+
+
+
+
+<script defer src="/assets/js/dist/post.min.js"></script>
+
+
+
+<!-- Pageviews -->
+
+  
+
+  
+
+
+
+  
+
+  <!-- A placeholder to allow defining custom metadata -->
+
+</head>
+
+
+  <body>
+    <!-- The Side Bar -->
+
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end">
+  <header class="profile-wrapper">
+    <a href="/" id="avatar" class="rounded-circle"><img src="https://chirpy-img.netlify.app/assets/img/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a>
+
+    <a class="site-title d-block" href="/">子传的博客</a>
+    <p class="site-subtitle fst-italic mb-0">一个专注于技术写作的博客</p>
+  </header>
+  <!-- .profile-wrapper -->
+
+  <nav class="flex-column flex-grow-1 w-100 ps-0">
+    <ul class="nav">
+      <!-- home -->
+      <li class="nav-item">
+        <a href="/" class="nav-link">
+          <i class="fa-fw fas fa-home"></i>
+          <span>首页</span>
+        </a>
+      </li>
+      <!-- the real tabs -->
+      
+        <li class="nav-item">
+          <a href="/categories/" class="nav-link">
+            <i class="fa-fw fas fa-stream"></i>
+            
+
+            <span>分类</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+        <li class="nav-item">
+          <a href="/tags/" class="nav-link">
+            <i class="fa-fw fas fa-tags"></i>
+            
+
+            <span>标签</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+        <li class="nav-item">
+          <a href="/archives/" class="nav-link">
+            <i class="fa-fw fas fa-archive"></i>
+            
+
+            <span>归档</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+        <li class="nav-item">
+          <a href="/about/" class="nav-link">
+            <i class="fa-fw fas fa-info-circle"></i>
+            
+
+            <span>关于</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+    </ul>
+  </nav>
+
+  <div class="sidebar-bottom d-flex flex-wrap  align-items-center w-100">
+    
+      <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle">
+        <i class="fas fa-adjust"></i>
+      </button>
+
+      
+        <span class="icon-border"></span>
+      
+    
+
+    
+      
+
+      
+        <a
+          href="https://github.com/zichuantang"
+          aria-label="github"
+          
+
+          
+            target="_blank"
+            
+          
+
+          
+
+          
+            rel="noopener noreferrer"
+          
+        >
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+
+      
+        <a
+          href="https://twitter.com/twitter_username"
+          aria-label="twitter"
+          
+
+          
+            target="_blank"
+            
+          
+
+          
+
+          
+            rel="noopener noreferrer"
+          
+        >
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+      
+    
+      
+
+      
+        <a
+          href="javascript:location.href = 'mailto:' + ['3326192368','qq.com'].join('@')"
+          aria-label="email"
+          
+
+          
+
+          
+
+          
+        >
+          <i class="fas fa-envelope"></i>
+        </a>
+      
+    
+      
+
+      
+        <a
+          href="/feed.xml"
+          aria-label="rss"
+          
+
+          
+
+          
+
+          
+        >
+          <i class="fas fa-rss"></i>
+        </a>
+      
+    
+  </div>
+  <!-- .sidebar-bottom -->
+</aside>
+<!-- #sidebar -->
+
+
+    <div id="main-wrapper" class="d-flex justify-content-center">
+      <div class="container d-flex flex-column px-xxl-5">
+        <!-- The Top Bar -->
+
+<header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar">
+  <div
+    id="topbar"
+    class="d-flex align-items-center justify-content-between px-lg-3 h-100"
+  >
+    <nav id="breadcrumb" aria-label="Breadcrumb">
+      
+
+      
+        
+          
+            <span>
+              <a href="/">首页</a>
+            </span>
+
+          
+        
+          
+        
+          
+            
+              <span>濮院男大居然重装了MySQL！并且还把重装后的问题全都解决了!</span>
+            
+
+          
+        
+      
+    </nav>
+    <!-- endof #breadcrumb -->
+
+    <button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar">
+      <i class="fas fa-bars fa-fw"></i>
+    </button>
+
+    <div id="topbar-title">
+      文章
+    </div>
+
+    <button type="button" id="search-trigger" class="btn btn-link" aria-label="Search">
+      <i class="fas fa-search fa-fw"></i>
+    </button>
+
+    <search id="search" class="align-items-center ms-3 ms-lg-0">
+      <i class="fas fa-search fa-fw"></i>
+      <input
+        class="form-control"
+        id="search-input"
+        type="search"
+        aria-label="search"
+        autocomplete="off"
+        placeholder="搜索..."
+      >
+    </search>
+    <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">取消</button>
+  </div>
+</header>
+
+
+        <div class="row flex-grow-1">
+          <main aria-label="Main Content" class="col-12 col-lg-11 col-xl-9 px-md-4">
+            
+              <!-- Refactor the HTML structure -->
+
+
+
+<!--
+  In order to allow a wide table to scroll horizontally,
+  we suround the markdown table with `<div class="table-wrapper">` and `</div>`
+-->
+
+
+
+<!--
+  Fixed kramdown code highlight rendering:
+  https://github.com/penibelst/jekyll-compress-html/issues/101
+  https://github.com/penibelst/jekyll-compress-html/issues/71#issuecomment-188144901
+-->
+
+
+
+<!-- Change the icon of checkbox -->
+
+
+
+<!-- Handle images -->
+
+
+
+
+
+<!-- Add header for code snippets -->
+
+
+
+<!-- Create heading anchors -->
+
+
+
+
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+
+
+
+<!-- return -->
+
+
+
+
+
+
+
+
+
+
+<article class="px-1" data-toc="false">
+  <header>
+    <h1 data-toc-skip>濮院男大居然重装了MySQL！并且还把重装后的问题全都解决了!</h1>
+    
+
+    <div class="post-meta text-muted">
+      <!-- published date -->
+      <span>
+        发表于
+        <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1741968000"
+  data-df="YYYY/MM/DD"
+  
+    data-bs-toggle="tooltip" data-bs-placement="bottom"
+  
+>
+  2025/03/15
+</time>
+
+      </span>
+
+      <!-- lastmod date -->
+      
+
+      
+
+      <div class="d-flex justify-content-between">
+        <!-- author(s) -->
+        <span>
+          
+
+          作者
+
+          <em>
+            
+              
+                
+                
+              
+            
+          </em>
+        </span>
+
+        <div>
+          <!-- pageviews -->
+          
+
+          <!-- read time -->
+          <!-- Calculate the post's reading time, and display the word count in tooltip -->
+
+
+
+<!-- words per minute -->
+
+
+
+
+
+
+
+
+
+
+<!-- return element -->
+<span
+  class="readtime"
+  data-bs-toggle="tooltip"
+  data-bs-placement="bottom"
+  title="1012 字"
+>
+  <em>5 分钟</em>阅读</span>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  
+
+  <div class="content">
+    <blockquote>
+  <p class="block-tip">事因MySQL好久没用了，如何点开就打不开了，密码一致错…如何决心重装！</p>
+</blockquote>
+
+<p>问ChatGPT把原本留下的能删的都删了，重装后输入这个指令一直报错：</p>
+
+<p>PS C:\Users\33261&gt; mysql -u root</p>
+
+<blockquote class="block-tip">
+  <p>ERROR 2003 (HY000): Can’t connect to MySQL server on ‘localhost:3306’ (10061)</p>
+</blockquote>
+
+<p>一直报这个错，一直报这个错…</p>
+
+<ul>
+  <li>
+    <p>这个看似是端口问题，所以，
+使用 netstat 检查端口占用情况：确保 3306 端口没有被其他应用占用：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>cmd
+</pre></td></tr></tbody></table></code></div>    </div>
+
+    <div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>netstat -ano | findstr :3306
+</pre></td></tr></tbody></table></code></div>    </div>
+  </li>
+  <li>
+    <p>结果上面之后问了AI就来到了最最最关键的代码了，</p>
+  </li>
+</ul>
+
+<blockquote class="block-tip">
+  <p>mysqld –skip-grant-tables –console</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>mysqld --skip-grant-tables --console
+</pre></td></tr></tbody></table></code></div></div>
+
+<p>这个代码是检查你MySQL遇到的问题的（以我的理解），接下来是我一直输密码一直错，问题改密码的命令，有很多改密码的命令，但这个好像才适合我的MySQL 9.2.0，然后我就运行了，改了，好像没啥用，密码还是输了就错…所以这个应该不是很重要，</p>
+
+<ol>
+  <li>
+    <p>直接设置明文密码</p>
+
+    <p>在 MySQL 9.2.0 中，</p>
+
+    <p>authentication_string</p>
+
+    <p>可以直接存储明文密码，MySQL 会自动处理加密。运行以下命令：</p>
+
+    <p>sql</p>
+
+    <p>收起取消自动换行复制</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>UPDATE mysql.user SET authentication_string = '123456' WHERE User = 'root' AND Host = 'localhost';
+</pre></td></tr></tbody></table></code></div>    </div>
+
+    <ul>
+      <li>注意：这里去掉了 PASSWORD() 函数，直接用明文 ‘123456’。</li>
+      <li>‘123456’ 是你要设置的新密码，可以替换成其他密码。</li>
+    </ul>
+  </li>
+  <li>然后这个代码也试试，
+    <div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>  ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+  FLUSH PRIVILEGES;
+  EXIT;
+</pre></td></tr></tbody></table></code></div>    </div>
+  </li>
+  <li>最后，
+    <div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>  mysql -u root -p
+</pre></td></tr></tbody></table></code></div>    </div>
+  </li>
+</ol>
+
+<p>总结，就是你也遇到这个问题，</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>PS C:\Users\33261&gt; mysql -u root
+ERROR 2003 (HY000): Can't connect to MySQL server on 'localhost:3306' (10061)
+</pre></td></tr></tbody></table></code></div></div>
+
+<p>你就先输入这个命令，</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>mysqld --skip-grant-tables --console
+</pre></td></tr></tbody></table></code></div></div>
+
+<p>来查询你遇到的具体问题，把这些问题给AI，然后一个个解决。</p>
+
+<p>这里面就很多，我举例几个：</p>
+
+<ol>
+  <li>你的MySQL文件夹下没用这个my.ini或者my.cnf文件，这个是配置文件，你就自己创建，并且这两个我试了很久最后放置的是这样，
+  这个my.ini里面是
+    <div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>[mysqld]
+port = 3306
+bind-address = 0.0.0.0
+skip-networking = 0
+[mysqld]
+datadir = C:/Program Files/mysql-9.2.0-winx64/data
+</pre></td></tr></tbody></table></code></div>    </div>
+    <p>这个my.cnf里面是</p>
+    <div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>[mysqld]
+port=3306
+bind-address=127.0.0.1  # 或 0.0.0.0，如果需要远程访问
+skip-networking=0      # 确保未禁用网络
+datadir="C:\Program Files\mysql-9.2.0-winx64\data"
+</pre></td></tr></tbody></table></code></div>    </div>
+  </li>
+  <li>
+    <p>我的这个文件”C:\Program Files\mysql-9.2.0-winx64\data\ibdata1”是要给完全控制的权限的！（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。并且还有这个文件”C:\Program Files\mysql-9.2.0-winx64\data”（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。</p>
+  </li>
+  <li>
+    <p>在你装的MySQL目录下C:\Program Files\mysql-9.2.0-winx64\data这里面找到这个文件.err文件，这里面就是一些报错日志，可以参考，发给AI…</p>
+  </li>
+  <li>
+    <p>如果权限正确但仍报错，可能是</p>
+
+    <p>ibdata1</p>
+
+    <p>被其他进程锁定：</p>
+
+    <p>a.  打开“资源监视器”：按 Ctrl + Shift + Esc 打开任务管理器，点击“性能”选项卡，选择“资源监视器”。</p>
+
+    <p>b.  在“CPU”选项卡下，点击“关联的句柄”，搜索 ibdata1。</p>
+
+    <p>c.  如果有进程占用，结束该进程（通常是另一个 mysqld.exe 实例）。</p>
+  </li>
+  <li>
+    <p>还有就是检查MySQL服务是否启动，</p>
+
+    <p>启动MySQL：</p>
+    <div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>net start mysql
+</pre></td></tr></tbody></table></code></div>    </div>
+    <p>关闭MySQL：</p>
+    <div class="language-plaintext highlighter-rouge"><div class="code-header">
+        <span data-label-text="Plaintext"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>net stop mysql
+</pre></td></tr></tbody></table></code></div>    </div>
+  </li>
+  <li>按 Ctrl + Shift + Esc 打开任务管理器，点击“服务”选项卡，去找MySQL，去那里看是否有运行。</li>
+</ol>
+
+<p>等等等等，许多许多各式各样的问题，这都是我遇到的，并一个个解决的，希望这篇能帮到你，让你少走点弯路，你避坑是我最痛苦的事情…OK，祝你不孕不育子孙满堂，谢谢(〃￣︶￣)人(￣︶￣〃)</p>
+
+<p>注：以此篇记录我这一天痛苦的历程…</p>
+
+  </div>
+
+  <div class="post-tail-wrapper text-muted">
+    <!-- categories -->
+    
+      <div class="post-meta mb-3">
+        <i class="far fa-folder-open fa-fw me-1"></i>
+        
+          <a href="/categories/jekyll/">Jekyll</a>
+      </div>
+    
+
+    <!-- tags -->
+    
+
+    <div
+      class="
+        post-tail-bottom
+        d-flex justify-content-between align-items-center mt-5 pb-2
+      "
+    >
+      <div class="license-wrapper">
+        
+          
+
+          本文由作者按照 
+        <a href="https://creativecommons.org/licenses/by/4.0/">
+          CC BY 4.0
+        </a>
+         进行授权
+        
+      </div>
+
+      <!-- Post sharing snippet -->
+
+<div class="share-wrapper d-flex align-items-center">
+  <span class="share-label text-muted">分享</span>
+  <span class="share-icons">
+    
+    
+    
+
+    
+
+      
+
+      <a href="https://twitter.com/intent/tweet?text=%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL%EF%BC%81%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!%20-%20%E5%AD%90%E4%BC%A0%E7%9A%84%E5%8D%9A%E5%AE%A2&url=https%3A%2F%2Fzichuantang.github.io%2Fposts%2F%25E6%25BF%25AE%25E9%2599%25A2%25E7%2594%25B7%25E5%25A4%25A7%25E5%25B1%2585%25E7%2584%25B6%25E9%2587%258D%25E8%25A3%2585%25E4%25BA%2586MySQL-%25E5%25B9%25B6%25E4%25B8%2594%25E8%25BF%2598%25E6%258A%258A%25E9%2587%258D%25E8%25A3%2585%25E5%2590%258E%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%25E5%2585%25A8%25E9%2583%25BD%25E8%25A7%25A3%25E5%2586%25B3%25E4%25BA%2586%21%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter">
+        <i class="fa-fw fa-brands fa-square-x-twitter"></i>
+      </a>
+    
+
+      
+
+      <a href="https://www.facebook.com/sharer/sharer.php?title=%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL%EF%BC%81%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!%20-%20%E5%AD%90%E4%BC%A0%E7%9A%84%E5%8D%9A%E5%AE%A2&u=https%3A%2F%2Fzichuantang.github.io%2Fposts%2F%25E6%25BF%25AE%25E9%2599%25A2%25E7%2594%25B7%25E5%25A4%25A7%25E5%25B1%2585%25E7%2584%25B6%25E9%2587%258D%25E8%25A3%2585%25E4%25BA%2586MySQL-%25E5%25B9%25B6%25E4%25B8%2594%25E8%25BF%2598%25E6%258A%258A%25E9%2587%258D%25E8%25A3%2585%25E5%2590%258E%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%25E5%2585%25A8%25E9%2583%25BD%25E8%25A7%25A3%25E5%2586%25B3%25E4%25BA%2586%21%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook">
+        <i class="fa-fw fab fa-facebook-square"></i>
+      </a>
+    
+
+      
+
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fzichuantang.github.io%2Fposts%2F%25E6%25BF%25AE%25E9%2599%25A2%25E7%2594%25B7%25E5%25A4%25A7%25E5%25B1%2585%25E7%2584%25B6%25E9%2587%258D%25E8%25A3%2585%25E4%25BA%2586MySQL-%25E5%25B9%25B6%25E4%25B8%2594%25E8%25BF%2598%25E6%258A%258A%25E9%2587%258D%25E8%25A3%2585%25E5%2590%258E%25E7%259A%2584%25E9%2597%25AE%25E9%25A2%2598%25E5%2585%25A8%25E9%2583%25BD%25E8%25A7%25A3%25E5%2586%25B3%25E4%25BA%2586%21%2F&text=%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL%EF%BC%81%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!%20-%20%E5%AD%90%E4%BC%A0%E7%9A%84%E5%8D%9A%E5%AE%A2" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram">
+        <i class="fa-fw fab fa-telegram"></i>
+      </a>
+    
+
+    <button
+      id="copy-link"
+      aria-label="Copy link"
+      class="btn small"
+      data-bs-toggle="tooltip"
+      data-bs-placement="top"
+      title="分享链接"
+      data-title-succeed="链接已复制！"
+    >
+      <i class="fa-fw fas fa-link pe-none fs-6"></i>
+    </button>
+  </span>
+</div>
+
+    </div>
+    <!-- .post-tail-bottom -->
+  </div>
+  <!-- div.post-tail-wrapper -->
+</article>
+
+
+            
+          </main>
+
+          <!-- panel -->
+          <aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 text-muted">
+            <div class="access">
+              <!-- Get 5 last posted/updated posts -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <section id="access-lastmod">
+    <h2 class="panel-heading">最近更新</h2>
+    <ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E5%81%A5%E8%BA%AB%E6%97%A5%E7%A8%8B/">健身-日程</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/">安装 Chirpy 主题</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E5%85%A8%E9%9D%A2%E8%83%B8%E8%83%8C%E8%82%A9%E8%AE%AD%E7%BB%83%E6%8C%87%E5%8D%97-%E5%8A%A8%E4%BD%9C-%E6%8A%80%E5%B7%A7%E4%B8%8E%E7%A7%91%E5%AD%A6%E8%AE%A1%E5%88%92/">全面胸背肩训练指南：动作、技巧与科学计划</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E8%AE%AD%E7%BB%83-%E9%A5%AE%E9%A3%9F%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/">训练、饮食与恢复的终极指南</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E5%BF%85%E8%A3%85/">必装</a>
+        </li>
+      
+    </ul>
+  </section>
+  <!-- #access-lastmod -->
+
+
+              <!-- The trending tags list -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+
+
+  <section>
+    <h2 class="panel-heading">热门标签</h2>
+    <div class="d-flex flex-wrap mt-3 mb-1 me-3">
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/favicon/">favicon</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/getting-started/">getting started</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/writing/">writing</a>
+      
+    </div>
+  </section>
+
+
+            </div>
+
+            
+              
+              
+
+
+
+
+
+
+
+            
+          </aside>
+        </div>
+
+        <div class="row">
+          <!-- tail -->
+          <div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4">
+            
+              
+              <!-- Recommend the other 3 posts according to the tags and categories of the current post. -->
+
+<!-- The total size of related posts -->
+
+
+<!-- An random integer that bigger than 0 -->
+
+
+<!-- Equals to TAG_SCORE / {max_categories_hierarchy} -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <aside id="related-posts" aria-labelledby="related-label">
+    <h3 class="mb-4" id="related-label">相关文章</h3>
+    <nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4">
+      
+        <article class="col">
+          <a href="/posts/%E5%81%A5%E8%BA%AB%E6%97%A5%E7%A8%8B/" class="post-preview card h-100">
+            <div class="card-body">
+              <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1746288000"
+  data-df="YYYY/MM/DD"
+  
+>
+  2025/05/04
+</time>
+
+              <h4 class="pt-0 my-2">健身-日程</h4>
+              <div class="text-muted">
+                <p>日期         事件                                 5月4日         练背。继续负重10kg引体。                       5月3日         练胸。继续史密斯80kg做几组，差点给我直接送走。                       5月2日         休息。                       5...</p>
+              </div>
+            </div>
+          </a>
+        </article>
+      
+        <article class="col">
+          <a href="/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/" class="post-preview card h-100">
+            <div class="card-body">
+              <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1745164800"
+  data-df="YYYY/MM/DD"
+  
+>
+  2025/04/21
+</time>
+
+              <h4 class="pt-0 my-2">安装 Chirpy 主题</h4>
+              <div class="text-muted">
+                <p>从你的命令行输出看，你尝试运行 npm install 来安装 Chirpy 主题的前端依赖，但遇到了一些警告（EBADENGINE Unsupported engine），不过最终依赖还是成功安装了（added 667 packages）。以下是对输出的分析和后续步骤的建议，帮助你解决图片模糊问题并确保网站功能正常。    命令和输出分析     命令：cd C:\Users\33261\...</p>
+              </div>
+            </div>
+          </a>
+        </article>
+      
+        <article class="col">
+          <a href="/posts/%E5%85%A8%E9%9D%A2%E8%83%B8%E8%83%8C%E8%82%A9%E8%AE%AD%E7%BB%83%E6%8C%87%E5%8D%97-%E5%8A%A8%E4%BD%9C-%E6%8A%80%E5%B7%A7%E4%B8%8E%E7%A7%91%E5%AD%A6%E8%AE%A1%E5%88%92/" class="post-preview card h-100">
+            <div class="card-body">
+              <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1744560000"
+  data-df="YYYY/MM/DD"
+  
+>
+  2025/04/14
+</time>
+
+              <h4 class="pt-0 my-2">全面胸背肩训练指南：动作、技巧与科学计划</h4>
+              <div class="text-muted">
+                <p>杠铃平板卧推技巧总结    杠铃平板卧推是锻炼胸大肌、肱三头肌和肩部肌群的经典动作。以下是一些技巧，帮助你安全、高效地完成动作：     正确姿势：            躺姿：平躺在卧推凳上，双脚稳稳踩地，臀部、背部和头部贴紧凳面。       肩胛收紧：肩胛骨向内收紧并下沉，形成稳定的支撑，保护肩关节。       握距：双手握杠，握距比肩稍宽（约1.5倍肩宽），手腕保持中立。     ...</p>
+              </div>
+            </div>
+          </a>
+        </article>
+      
+    </nav>
+  </aside>
+  <!-- #related-posts -->
+
+
+            
+              
+              <!-- Navigation buttons at the bottom of the post. -->
+
+<nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation">
+  
+  
+
+  
+    <a
+      href="/posts/%E4%B8%80%E7%82%B9%E9%97%AE%E9%A2%98/"
+      class="btn btn-outline-primary"
+      aria-label="上一篇"
+    >
+      <p>一点问题</p>
+    </a>
+  
+
+  
+    <a
+      href="/posts/%E5%BF%85%E8%A3%85/"
+      class="btn btn-outline-primary"
+      aria-label="下一篇"
+    >
+      <p>必装</p>
+    </a>
+  
+</nav>
+
+            
+
+            <!-- The Footer -->
+
+<footer
+  aria-label="Site Info"
+  class="
+    d-flex flex-column justify-content-center text-muted
+    flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3
+  "
+>
+  <p>©
+    <time>2025</time>
+
+    
+      <a href="https://github.com/zichuantang">唐子传</a>.
+    
+
+    
+      <span
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="除非另有说明，本网站上的博客文章均由作者按照知识共享署名 4.0 国际 (CC BY 4.0) 许可协议进行授权。"
+      >保留部分权利。</span>
+    
+  </p>
+
+  <p>本站采用 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 主题 <a
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="v7.2.4"
+        href="https://github.com/cotes2020/jekyll-theme-chirpy"
+        target="_blank"
+        rel="noopener"
+      >Chirpy</a>
+  </p>
+</footer>
+
+          </div>
+        </div>
+
+        <!-- The Search results -->
+
+<div id="search-result-wrapper" class="d-flex justify-content-center d-none">
+  <div class="col-11 content">
+    <div id="search-hints">
+      <!-- The trending tags list -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+
+
+  <section>
+    <h2 class="panel-heading">热门标签</h2>
+    <div class="d-flex flex-wrap mt-3 mb-1 me-3">
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/favicon/">favicon</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/getting-started/">getting started</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/writing/">writing</a>
+      
+    </div>
+  </section>
+
+
+    </div>
+    <div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div>
+  </div>
+</div>
+
+      </div>
+
+      <aside aria-label="Scroll to Top">
+        <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow">
+          <i class="fas fa-angle-up"></i>
+        </button>
+      </aside>
+    </div>
+
+    <div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div>
+
+    
+      <aside
+  id="notification"
+  class="toast"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+  data-bs-animation="true"
+  data-bs-autohide="false"
+>
+  <div class="toast-header">
+    <button
+      type="button"
+      class="btn-close ms-auto"
+      data-bs-dismiss="toast"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="toast-body text-center pt-0">
+    <p class="px-2 mb-3">发现新版本的内容。</p>
+    <button type="button" class="btn btn-primary" aria-label="Update">
+      更新
+    </button>
+  </div>
+</aside>
+
+    
+
+    <!-- Embedded scripts -->
+
+    
+      
+      <!-- The comments switcher -->
+
+
+    
+
+    <!--
+  Jekyll Simple Search loader
+  See: <https://github.com/christian-fei/Simple-Jekyll-Search>
+-->
+
+
+
+
+
+<script>
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/assets/js/data/search.json',
+      searchResultTemplate: '  <article class="px-1 px-sm-2 px-lg-4 px-xl-0">    <header>      <h2><a href="{url}">{title}</a></h2>      <div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1">        {categories}        {tags}      </div>    </header>    <p>{content}</p>  </article>',
+      noResultsText: '<p class="mt-5">搜索结果为空</p>',
+      templateMiddleware: function(prop, value, template) {
+        if (prop === 'categories') {
+          if (value === '') {
+            return `${value}`;
+          } else {
+            return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`;
+          }
+        }
+
+        if (prop === 'tags') {
+          if (value === '') {
+            return `${value}`;
+          } else {
+            return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`;
+          }
+        }
+      }
+    });
+  });
+</script>
+
+  </body>
+</html>
+

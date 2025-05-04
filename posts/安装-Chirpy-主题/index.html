@@ -1,0 +1,1865 @@
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- `site.alt_lang` can specify a language different from the UI -->
+<html lang="zh-CN" >
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
+  ><!-- Setup Open Graph image -->
+
+  
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="安装 Chirpy 主题" />
+<meta name="author" content="TangZichuan" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="description" content="从你的命令行输出看，你尝试运行 npm install 来安装 Chirpy 主题的前端依赖，但遇到了一些警告（EBADENGINE Unsupported engine），不过最终依赖还是成功安装了（added 667 packages）。以下是对输出的分析和后续步骤的建议，帮助你解决图片模糊问题并确保网站功能正常。 命令和输出分析 命令：cd C:\Users\33261\Desktop\jekyll-theme-chirpy-master 含义：更改当前工作目录到你的 Jekyll 项目根目录。 作用：确保后续命令（如 npm install）在正确的目录下执行。 注意：你重复运行了两次此命令，第二次是冗余的，因为你已经在目标目录中。 命令：npm install 含义：根据 package.json 文件安装项目所需的所有 Node.js 依赖。 作用：为 Chirpy 主题安装前端依赖（如 JavaScript 库、CSS 处理器等），这些依赖用于支持图片懒加载、搜索功能、主题切换等动态功能。 警告：npm warn EBADENGINE Unsupported engine {...} 含义：多个依赖包（例如 semantic-release、glob、minimatch 等）声明它们需要 Node.js 版本为 20 或更高（node: &#39;&gt;=20.8.1&#39; 或 node: &#39;20 || &gt;=22&#39;），但你当前使用的 Node.js 版本是 v18.20.7。 具体警告： semantic-release@24.2.3 需要 node &gt;=20.8.1。 glob@11.0.1 需要 node 20 || &gt;=22。 类似警告出现在其他包（如 minimatch、lru-cache 等）。 影响： 这些警告表示你的 Node.js 版本低于依赖包的要求，可能导致某些功能不稳定或无法工作。 不过，npm install 仍然完成了（added 667 packages），说明这些依赖被强制安装，但运行时可能会出现兼容性问题。 解决方法：升级 Node.js 版本（见下文）。 输出：&gt; jekyll-theme-chirpy@7.2.4 prepare 含义：npm install 完成后，运行了 package.json 中定义的 prepare 脚本。 作用：Chirpy 主题的 prepare 脚本执行了 husky 命令，用于设置 Git 钩子（例如提交前检查）。 背景：husky 是一个工具，用于在 Git 操作（如 git commit）时运行脚本，确保代码质量。 输出：added 667 packages in 29s 含义：成功安装了 667 个 Node.js 包，耗时 29 秒。 作用：这些包是 Chirpy 主题的前端依赖，包括图片加载、主题切换、搜索功能所需的库。 背景：安装完成意味着前端资源已经准备好，但由于 Node.js 版本问题，部分功能可能需要进一步验证。 输出：154 packages are looking for funding 含义：有 154 个安装的包提示它们需要资金支持。 作用：这是 npm 的提示，建议你运行 npm fund 查看这些包的资助信息。 背景：你可以忽略此提示，除非你想为这些开源项目捐款。 为什么图片仍可能模糊？ 在之前的分析中，图片模糊的原因是 Chirpy 主题的懒加载机制（显示模糊占位图，直到图片进入视口或被点击才会加载高清版本）。你运行了 npm install，前端依赖已安装，但可能存在以下问题导致图片加载仍不正常： Node.js 版本不兼容： 由于你的 Node.js 版本（v18.20.7）低于依赖要求的 &gt;=20.8.1，某些 JavaScript 功能（例如图片懒加载的脚本 _javascript/modules/components/img-loading.js）可能未正确执行。 这可能导致图片加载逻辑未触发，高清图片无法自动加载。 未运行初始化或构建命令： Chirpy 主题可能需要运行 npm run init 或 npm run build 来生成前端资源（例如合并 JavaScript 和 CSS 文件）。 如果这些步骤未执行，图片加载脚本可能未正确初始化。 图片路径或配置问题： 如果 _posts/2019-08-08-text-and-typography.md 中的图片路径有误，高清图片可能无法加载。 解决方法 升级 Node.js 版本： 步骤： 当前 Node.js 版本为 v18.20.7，而依赖需要 &gt;=20.8.1。 访问 Node.js 官网，下载并安装最新 LTS 版本（截至 2025 年 4 月，推荐 Node.js 20.x 或更高）。 安装完成后，验证版本： 1 2 node -v npm -v 确保 Node.js 版本为 20.x 或更高。 删除旧的 node_modules 和 package-lock.json 文件： 1 2 del node_modules /s /q del package-lock.json 重新运行 npm install： 1 npm install 升级后重新运行 bundle exec jekyll serve，检查图片是否正常加载。 运行初始化或构建命令： Chirpy 主题可能需要额外的初始化或构建步骤来生成前端资源。 步骤： 运行： 1 npm run init 或： 1 npm run build （具体命令取决于 Chirpy 文档，建议查看 Chirpy GitHub 的说明）。 完成后，重新运行： 1 bundle exec jekyll serve 刷新浏览器，检查图片是否自动加载高清版本。 检查图片路径： 步骤： 打开 _posts/2019-08-08-text-and-typography.md，找到图片的 Markdown 语法，例如： 1 ![Responsive rendering of Chirpy theme on multiple devices.](/_posts/2019-08-08-text-and-typography/responsive-rendering.png) 确保图片文件（如 responsive-rendering.png）存在于指定路径。 如果路径错误，调整为正确路径，重新运行 bundle exec jekyll serve。 检查浏览器开发者工具： 步骤： 打开浏览器开发者工具（F12），切换到“网络”选项卡。 刷新页面，查看图片请求是否成功加载： 如果图片请求返回 404，说明路径有误，需调整 Markdown 文件中的路径。 如果请求被拦截，检查是否有广告拦截器或浏览器扩展干扰。 切换到“控制台”选项卡，查看是否有 JavaScript 错误，可能与 Node.js 版本不兼容有关。 禁用懒加载（可选）： 如果你不想要懒加载和模糊占位效果，可以禁用。 步骤： 打开 _sass/pages/_post.scss，查找与图片模糊相关的样式，例如： 1 2 3 img[data-src] { filter: blur(5px); } 删除或注释掉 filter: blur(5px);。 或者，修改 _javascript/modules/components/img-loading.js，禁用懒加载逻辑（需备份文件）。 重新运行 bundle exec jekyll serve，检查效果。 下一步建议 验证图片加载： 升级 Node.js 并运行 npm run init 或 npm run build 后，刷新 http://127.0.0.1:4000/，检查图片是否自动加载高清版本。 如果仍需点击才能加载高清版本，说明懒加载功能正常工作，这是 Chirpy 主题的默认行为。 测试其他功能： 确认 Chirpy 主题的其他动态功能是否正常： 搜索功能（顶部搜索栏）。 主题切换（明亮/暗黑模式）。 分类和标签页面。 如果功能不正常，可能是 Node.js 版本问题导致，升级后应解决。 添加自定义内容： 编辑 _posts 目录中的文章，或添加新文章，格式如下： 1 2 3 4 5 6 7 8 9 --- layout: post title: &quot;My First Post&quot; date: 2025-04-21 10:00:00 +0800 categories: blog --- Hello, this is my first blog post! ![My Image](/assets/img/my-image.jpg) 确保图片路径正确，Jekyll 会自动重新生成。 总结 问题原因： 图片模糊是 Chirpy 主题的懒加载机制导致，但高清图片未自动加载可能是因为 Node.js 版本（v18.20.7）低于依赖要求（&gt;=20.8.1），导致 JavaScript 脚本未正确运行。 也可能是未运行 npm run init 或 npm run build，前端资源未完全初始化。 解决方法： 升级 Node.js 到 20.x 或更高版本，重新安装依赖。 运行 npm run init 或 npm run build 初始化前端资源。 检查图片路径和浏览器请求状态。 （可选）禁用懒加载和模糊效果。 反馈： 如果图片仍无法正常加载，请提供： 升级 Node.js 后的版本（node -v 输出）。 _posts/2019-08-08-text-and-typography.md 中图片部分的代码。 浏览器开发者工具中的图片请求状态（是否有 404 或其他错误）。 我可以继续协助你解决问题！" />
+<meta property="og:description" content="从你的命令行输出看，你尝试运行 npm install 来安装 Chirpy 主题的前端依赖，但遇到了一些警告（EBADENGINE Unsupported engine），不过最终依赖还是成功安装了（added 667 packages）。以下是对输出的分析和后续步骤的建议，帮助你解决图片模糊问题并确保网站功能正常。 命令和输出分析 命令：cd C:\Users\33261\Desktop\jekyll-theme-chirpy-master 含义：更改当前工作目录到你的 Jekyll 项目根目录。 作用：确保后续命令（如 npm install）在正确的目录下执行。 注意：你重复运行了两次此命令，第二次是冗余的，因为你已经在目标目录中。 命令：npm install 含义：根据 package.json 文件安装项目所需的所有 Node.js 依赖。 作用：为 Chirpy 主题安装前端依赖（如 JavaScript 库、CSS 处理器等），这些依赖用于支持图片懒加载、搜索功能、主题切换等动态功能。 警告：npm warn EBADENGINE Unsupported engine {...} 含义：多个依赖包（例如 semantic-release、glob、minimatch 等）声明它们需要 Node.js 版本为 20 或更高（node: &#39;&gt;=20.8.1&#39; 或 node: &#39;20 || &gt;=22&#39;），但你当前使用的 Node.js 版本是 v18.20.7。 具体警告： semantic-release@24.2.3 需要 node &gt;=20.8.1。 glob@11.0.1 需要 node 20 || &gt;=22。 类似警告出现在其他包（如 minimatch、lru-cache 等）。 影响： 这些警告表示你的 Node.js 版本低于依赖包的要求，可能导致某些功能不稳定或无法工作。 不过，npm install 仍然完成了（added 667 packages），说明这些依赖被强制安装，但运行时可能会出现兼容性问题。 解决方法：升级 Node.js 版本（见下文）。 输出：&gt; jekyll-theme-chirpy@7.2.4 prepare 含义：npm install 完成后，运行了 package.json 中定义的 prepare 脚本。 作用：Chirpy 主题的 prepare 脚本执行了 husky 命令，用于设置 Git 钩子（例如提交前检查）。 背景：husky 是一个工具，用于在 Git 操作（如 git commit）时运行脚本，确保代码质量。 输出：added 667 packages in 29s 含义：成功安装了 667 个 Node.js 包，耗时 29 秒。 作用：这些包是 Chirpy 主题的前端依赖，包括图片加载、主题切换、搜索功能所需的库。 背景：安装完成意味着前端资源已经准备好，但由于 Node.js 版本问题，部分功能可能需要进一步验证。 输出：154 packages are looking for funding 含义：有 154 个安装的包提示它们需要资金支持。 作用：这是 npm 的提示，建议你运行 npm fund 查看这些包的资助信息。 背景：你可以忽略此提示，除非你想为这些开源项目捐款。 为什么图片仍可能模糊？ 在之前的分析中，图片模糊的原因是 Chirpy 主题的懒加载机制（显示模糊占位图，直到图片进入视口或被点击才会加载高清版本）。你运行了 npm install，前端依赖已安装，但可能存在以下问题导致图片加载仍不正常： Node.js 版本不兼容： 由于你的 Node.js 版本（v18.20.7）低于依赖要求的 &gt;=20.8.1，某些 JavaScript 功能（例如图片懒加载的脚本 _javascript/modules/components/img-loading.js）可能未正确执行。 这可能导致图片加载逻辑未触发，高清图片无法自动加载。 未运行初始化或构建命令： Chirpy 主题可能需要运行 npm run init 或 npm run build 来生成前端资源（例如合并 JavaScript 和 CSS 文件）。 如果这些步骤未执行，图片加载脚本可能未正确初始化。 图片路径或配置问题： 如果 _posts/2019-08-08-text-and-typography.md 中的图片路径有误，高清图片可能无法加载。 解决方法 升级 Node.js 版本： 步骤： 当前 Node.js 版本为 v18.20.7，而依赖需要 &gt;=20.8.1。 访问 Node.js 官网，下载并安装最新 LTS 版本（截至 2025 年 4 月，推荐 Node.js 20.x 或更高）。 安装完成后，验证版本： 1 2 node -v npm -v 确保 Node.js 版本为 20.x 或更高。 删除旧的 node_modules 和 package-lock.json 文件： 1 2 del node_modules /s /q del package-lock.json 重新运行 npm install： 1 npm install 升级后重新运行 bundle exec jekyll serve，检查图片是否正常加载。 运行初始化或构建命令： Chirpy 主题可能需要额外的初始化或构建步骤来生成前端资源。 步骤： 运行： 1 npm run init 或： 1 npm run build （具体命令取决于 Chirpy 文档，建议查看 Chirpy GitHub 的说明）。 完成后，重新运行： 1 bundle exec jekyll serve 刷新浏览器，检查图片是否自动加载高清版本。 检查图片路径： 步骤： 打开 _posts/2019-08-08-text-and-typography.md，找到图片的 Markdown 语法，例如： 1 ![Responsive rendering of Chirpy theme on multiple devices.](/_posts/2019-08-08-text-and-typography/responsive-rendering.png) 确保图片文件（如 responsive-rendering.png）存在于指定路径。 如果路径错误，调整为正确路径，重新运行 bundle exec jekyll serve。 检查浏览器开发者工具： 步骤： 打开浏览器开发者工具（F12），切换到“网络”选项卡。 刷新页面，查看图片请求是否成功加载： 如果图片请求返回 404，说明路径有误，需调整 Markdown 文件中的路径。 如果请求被拦截，检查是否有广告拦截器或浏览器扩展干扰。 切换到“控制台”选项卡，查看是否有 JavaScript 错误，可能与 Node.js 版本不兼容有关。 禁用懒加载（可选）： 如果你不想要懒加载和模糊占位效果，可以禁用。 步骤： 打开 _sass/pages/_post.scss，查找与图片模糊相关的样式，例如： 1 2 3 img[data-src] { filter: blur(5px); } 删除或注释掉 filter: blur(5px);。 或者，修改 _javascript/modules/components/img-loading.js，禁用懒加载逻辑（需备份文件）。 重新运行 bundle exec jekyll serve，检查效果。 下一步建议 验证图片加载： 升级 Node.js 并运行 npm run init 或 npm run build 后，刷新 http://127.0.0.1:4000/，检查图片是否自动加载高清版本。 如果仍需点击才能加载高清版本，说明懒加载功能正常工作，这是 Chirpy 主题的默认行为。 测试其他功能： 确认 Chirpy 主题的其他动态功能是否正常： 搜索功能（顶部搜索栏）。 主题切换（明亮/暗黑模式）。 分类和标签页面。 如果功能不正常，可能是 Node.js 版本问题导致，升级后应解决。 添加自定义内容： 编辑 _posts 目录中的文章，或添加新文章，格式如下： 1 2 3 4 5 6 7 8 9 --- layout: post title: &quot;My First Post&quot; date: 2025-04-21 10:00:00 +0800 categories: blog --- Hello, this is my first blog post! ![My Image](/assets/img/my-image.jpg) 确保图片路径正确，Jekyll 会自动重新生成。 总结 问题原因： 图片模糊是 Chirpy 主题的懒加载机制导致，但高清图片未自动加载可能是因为 Node.js 版本（v18.20.7）低于依赖要求（&gt;=20.8.1），导致 JavaScript 脚本未正确运行。 也可能是未运行 npm run init 或 npm run build，前端资源未完全初始化。 解决方法： 升级 Node.js 到 20.x 或更高版本，重新安装依赖。 运行 npm run init 或 npm run build 初始化前端资源。 检查图片路径和浏览器请求状态。 （可选）禁用懒加载和模糊效果。 反馈： 如果图片仍无法正常加载，请提供： 升级 Node.js 后的版本（node -v 输出）。 _posts/2019-08-08-text-and-typography.md 中图片部分的代码。 浏览器开发者工具中的图片请求状态（是否有 404 或其他错误）。 我可以继续协助你解决问题！" />
+<link rel="canonical" href="https://zichuantang.github.io/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/" />
+<meta property="og:url" content="https://zichuantang.github.io/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/" />
+<meta property="og:site_name" content="子传的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-04-21T00:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="安装 Chirpy 主题" />
+<meta name="twitter:site" content="@twitter_username" />
+<meta name="twitter:creator" content="@TangZichuan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"TangZichuan"},"dateModified":"2025-04-21T00:00:00+08:00","datePublished":"2025-04-21T00:00:00+08:00","description":"从你的命令行输出看，你尝试运行 npm install 来安装 Chirpy 主题的前端依赖，但遇到了一些警告（EBADENGINE Unsupported engine），不过最终依赖还是成功安装了（added 667 packages）。以下是对输出的分析和后续步骤的建议，帮助你解决图片模糊问题并确保网站功能正常。 命令和输出分析 命令：cd C:\\Users\\33261\\Desktop\\jekyll-theme-chirpy-master 含义：更改当前工作目录到你的 Jekyll 项目根目录。 作用：确保后续命令（如 npm install）在正确的目录下执行。 注意：你重复运行了两次此命令，第二次是冗余的，因为你已经在目标目录中。 命令：npm install 含义：根据 package.json 文件安装项目所需的所有 Node.js 依赖。 作用：为 Chirpy 主题安装前端依赖（如 JavaScript 库、CSS 处理器等），这些依赖用于支持图片懒加载、搜索功能、主题切换等动态功能。 警告：npm warn EBADENGINE Unsupported engine {...} 含义：多个依赖包（例如 semantic-release、glob、minimatch 等）声明它们需要 Node.js 版本为 20 或更高（node: &#39;&gt;=20.8.1&#39; 或 node: &#39;20 || &gt;=22&#39;），但你当前使用的 Node.js 版本是 v18.20.7。 具体警告： semantic-release@24.2.3 需要 node &gt;=20.8.1。 glob@11.0.1 需要 node 20 || &gt;=22。 类似警告出现在其他包（如 minimatch、lru-cache 等）。 影响： 这些警告表示你的 Node.js 版本低于依赖包的要求，可能导致某些功能不稳定或无法工作。 不过，npm install 仍然完成了（added 667 packages），说明这些依赖被强制安装，但运行时可能会出现兼容性问题。 解决方法：升级 Node.js 版本（见下文）。 输出：&gt; jekyll-theme-chirpy@7.2.4 prepare 含义：npm install 完成后，运行了 package.json 中定义的 prepare 脚本。 作用：Chirpy 主题的 prepare 脚本执行了 husky 命令，用于设置 Git 钩子（例如提交前检查）。 背景：husky 是一个工具，用于在 Git 操作（如 git commit）时运行脚本，确保代码质量。 输出：added 667 packages in 29s 含义：成功安装了 667 个 Node.js 包，耗时 29 秒。 作用：这些包是 Chirpy 主题的前端依赖，包括图片加载、主题切换、搜索功能所需的库。 背景：安装完成意味着前端资源已经准备好，但由于 Node.js 版本问题，部分功能可能需要进一步验证。 输出：154 packages are looking for funding 含义：有 154 个安装的包提示它们需要资金支持。 作用：这是 npm 的提示，建议你运行 npm fund 查看这些包的资助信息。 背景：你可以忽略此提示，除非你想为这些开源项目捐款。 为什么图片仍可能模糊？ 在之前的分析中，图片模糊的原因是 Chirpy 主题的懒加载机制（显示模糊占位图，直到图片进入视口或被点击才会加载高清版本）。你运行了 npm install，前端依赖已安装，但可能存在以下问题导致图片加载仍不正常： Node.js 版本不兼容： 由于你的 Node.js 版本（v18.20.7）低于依赖要求的 &gt;=20.8.1，某些 JavaScript 功能（例如图片懒加载的脚本 _javascript/modules/components/img-loading.js）可能未正确执行。 这可能导致图片加载逻辑未触发，高清图片无法自动加载。 未运行初始化或构建命令： Chirpy 主题可能需要运行 npm run init 或 npm run build 来生成前端资源（例如合并 JavaScript 和 CSS 文件）。 如果这些步骤未执行，图片加载脚本可能未正确初始化。 图片路径或配置问题： 如果 _posts/2019-08-08-text-and-typography.md 中的图片路径有误，高清图片可能无法加载。 解决方法 升级 Node.js 版本： 步骤： 当前 Node.js 版本为 v18.20.7，而依赖需要 &gt;=20.8.1。 访问 Node.js 官网，下载并安装最新 LTS 版本（截至 2025 年 4 月，推荐 Node.js 20.x 或更高）。 安装完成后，验证版本： 1 2 node -v npm -v 确保 Node.js 版本为 20.x 或更高。 删除旧的 node_modules 和 package-lock.json 文件： 1 2 del node_modules /s /q del package-lock.json 重新运行 npm install： 1 npm install 升级后重新运行 bundle exec jekyll serve，检查图片是否正常加载。 运行初始化或构建命令： Chirpy 主题可能需要额外的初始化或构建步骤来生成前端资源。 步骤： 运行： 1 npm run init 或： 1 npm run build （具体命令取决于 Chirpy 文档，建议查看 Chirpy GitHub 的说明）。 完成后，重新运行： 1 bundle exec jekyll serve 刷新浏览器，检查图片是否自动加载高清版本。 检查图片路径： 步骤： 打开 _posts/2019-08-08-text-and-typography.md，找到图片的 Markdown 语法，例如： 1 ![Responsive rendering of Chirpy theme on multiple devices.](/_posts/2019-08-08-text-and-typography/responsive-rendering.png) 确保图片文件（如 responsive-rendering.png）存在于指定路径。 如果路径错误，调整为正确路径，重新运行 bundle exec jekyll serve。 检查浏览器开发者工具： 步骤： 打开浏览器开发者工具（F12），切换到“网络”选项卡。 刷新页面，查看图片请求是否成功加载： 如果图片请求返回 404，说明路径有误，需调整 Markdown 文件中的路径。 如果请求被拦截，检查是否有广告拦截器或浏览器扩展干扰。 切换到“控制台”选项卡，查看是否有 JavaScript 错误，可能与 Node.js 版本不兼容有关。 禁用懒加载（可选）： 如果你不想要懒加载和模糊占位效果，可以禁用。 步骤： 打开 _sass/pages/_post.scss，查找与图片模糊相关的样式，例如： 1 2 3 img[data-src] { filter: blur(5px); } 删除或注释掉 filter: blur(5px);。 或者，修改 _javascript/modules/components/img-loading.js，禁用懒加载逻辑（需备份文件）。 重新运行 bundle exec jekyll serve，检查效果。 下一步建议 验证图片加载： 升级 Node.js 并运行 npm run init 或 npm run build 后，刷新 http://127.0.0.1:4000/，检查图片是否自动加载高清版本。 如果仍需点击才能加载高清版本，说明懒加载功能正常工作，这是 Chirpy 主题的默认行为。 测试其他功能： 确认 Chirpy 主题的其他动态功能是否正常： 搜索功能（顶部搜索栏）。 主题切换（明亮/暗黑模式）。 分类和标签页面。 如果功能不正常，可能是 Node.js 版本问题导致，升级后应解决。 添加自定义内容： 编辑 _posts 目录中的文章，或添加新文章，格式如下： 1 2 3 4 5 6 7 8 9 --- layout: post title: &quot;My First Post&quot; date: 2025-04-21 10:00:00 +0800 categories: blog --- Hello, this is my first blog post! ![My Image](/assets/img/my-image.jpg) 确保图片路径正确，Jekyll 会自动重新生成。 总结 问题原因： 图片模糊是 Chirpy 主题的懒加载机制导致，但高清图片未自动加载可能是因为 Node.js 版本（v18.20.7）低于依赖要求（&gt;=20.8.1），导致 JavaScript 脚本未正确运行。 也可能是未运行 npm run init 或 npm run build，前端资源未完全初始化。 解决方法： 升级 Node.js 到 20.x 或更高版本，重新安装依赖。 运行 npm run init 或 npm run build 初始化前端资源。 检查图片路径和浏览器请求状态。 （可选）禁用懒加载和模糊效果。 反馈： 如果图片仍无法正常加载，请提供： 升级 Node.js 后的版本（node -v 输出）。 _posts/2019-08-08-text-and-typography.md 中图片部分的代码。 浏览器开发者工具中的图片请求状态（是否有 404 或其他错误）。 我可以继续协助你解决问题！","headline":"安装 Chirpy 主题","mainEntityOfPage":{"@type":"WebPage","@id":"https://zichuantang.github.io/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/"},"url":"https://zichuantang.github.io/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <title>安装 Chirpy 主题 | 子传的博客
+  </title>
+
+  <!--
+  The Favicons for Web, Android, Microsoft, and iOS (iPhone and iPad) Apps
+  Generated by: https://realfavicongenerator.net/
+-->
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+
+  <link rel="manifest" href="/assets/img/favicons/site.webmanifest">
+
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<meta name="apple-mobile-web-app-title" content="子传的博客">
+<meta name="application-name" content="子传的博客">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+
+  <!-- Resource Hints -->
+  
+    
+      
+        <link rel="preconnect" href="https://fonts.googleapis.com" >
+      
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" >
+      
+    
+      
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" >
+      
+    
+      
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" >
+      
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" >
+      
+    
+  
+
+  <!-- Bootstrap -->
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/assets/css/jekyll-theme-chirpy.css">
+
+  <!-- Web Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro:wght@400;600;700;900&display=swap">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.1/css/all.min.css">
+
+  <!-- 3rd-party Dependencies -->
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.32.2/dist/tocbot.min.css">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.min.css">
+  
+
+  
+    <!-- Image Popup -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
+  
+
+  <!-- Scripts -->
+
+  <script src="/assets/js/dist/theme.min.js"></script>
+
+  <!-- JS selector for site. -->
+
+<!-- commons -->
+
+
+
+<!-- layout specified -->
+
+
+  
+
+  
+    <!-- image lazy-loading & popup & clipboard -->
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.13/dayjs.min.js,npm/dayjs@1.11.13/locale/zh.js,npm/dayjs@1.11.13/plugin/relativeTime.js,npm/dayjs@1.11.13/plugin/localizedFormat.js,npm/tocbot@4.32.2/dist/tocbot.min.js,npm/mermaid@11.4.0/dist/mermaid.min.js"></script>
+
+
+
+
+
+
+
+<script defer src="/assets/js/dist/post.min.js"></script>
+
+
+
+<!-- Pageviews -->
+
+  
+
+  
+
+
+
+  
+
+  <!-- A placeholder to allow defining custom metadata -->
+
+</head>
+
+
+  <body>
+    <!-- The Side Bar -->
+
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end">
+  <header class="profile-wrapper">
+    <a href="/" id="avatar" class="rounded-circle"><img src="https://chirpy-img.netlify.app/assets/img/avatar.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a>
+
+    <a class="site-title d-block" href="/">子传的博客</a>
+    <p class="site-subtitle fst-italic mb-0">一个专注于技术写作的博客</p>
+  </header>
+  <!-- .profile-wrapper -->
+
+  <nav class="flex-column flex-grow-1 w-100 ps-0">
+    <ul class="nav">
+      <!-- home -->
+      <li class="nav-item">
+        <a href="/" class="nav-link">
+          <i class="fa-fw fas fa-home"></i>
+          <span>首页</span>
+        </a>
+      </li>
+      <!-- the real tabs -->
+      
+        <li class="nav-item">
+          <a href="/categories/" class="nav-link">
+            <i class="fa-fw fas fa-stream"></i>
+            
+
+            <span>分类</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+        <li class="nav-item">
+          <a href="/tags/" class="nav-link">
+            <i class="fa-fw fas fa-tags"></i>
+            
+
+            <span>标签</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+        <li class="nav-item">
+          <a href="/archives/" class="nav-link">
+            <i class="fa-fw fas fa-archive"></i>
+            
+
+            <span>归档</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+        <li class="nav-item">
+          <a href="/about/" class="nav-link">
+            <i class="fa-fw fas fa-info-circle"></i>
+            
+
+            <span>关于</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+    </ul>
+  </nav>
+
+  <div class="sidebar-bottom d-flex flex-wrap  align-items-center w-100">
+    
+      <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle">
+        <i class="fas fa-adjust"></i>
+      </button>
+
+      
+        <span class="icon-border"></span>
+      
+    
+
+    
+      
+
+      
+        <a
+          href="https://github.com/zichuantang"
+          aria-label="github"
+          
+
+          
+            target="_blank"
+            
+          
+
+          
+
+          
+            rel="noopener noreferrer"
+          
+        >
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+
+      
+        <a
+          href="https://twitter.com/twitter_username"
+          aria-label="twitter"
+          
+
+          
+            target="_blank"
+            
+          
+
+          
+
+          
+            rel="noopener noreferrer"
+          
+        >
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+      
+    
+      
+
+      
+        <a
+          href="javascript:location.href = 'mailto:' + ['3326192368','qq.com'].join('@')"
+          aria-label="email"
+          
+
+          
+
+          
+
+          
+        >
+          <i class="fas fa-envelope"></i>
+        </a>
+      
+    
+      
+
+      
+        <a
+          href="/feed.xml"
+          aria-label="rss"
+          
+
+          
+
+          
+
+          
+        >
+          <i class="fas fa-rss"></i>
+        </a>
+      
+    
+  </div>
+  <!-- .sidebar-bottom -->
+</aside>
+<!-- #sidebar -->
+
+
+    <div id="main-wrapper" class="d-flex justify-content-center">
+      <div class="container d-flex flex-column px-xxl-5">
+        <!-- The Top Bar -->
+
+<header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar">
+  <div
+    id="topbar"
+    class="d-flex align-items-center justify-content-between px-lg-3 h-100"
+  >
+    <nav id="breadcrumb" aria-label="Breadcrumb">
+      
+
+      
+        
+          
+            <span>
+              <a href="/">首页</a>
+            </span>
+
+          
+        
+          
+        
+          
+            
+              <span>安装 Chirpy 主题</span>
+            
+
+          
+        
+      
+    </nav>
+    <!-- endof #breadcrumb -->
+
+    <button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar">
+      <i class="fas fa-bars fa-fw"></i>
+    </button>
+
+    <div id="topbar-title">
+      文章
+    </div>
+
+    <button type="button" id="search-trigger" class="btn btn-link" aria-label="Search">
+      <i class="fas fa-search fa-fw"></i>
+    </button>
+
+    <search id="search" class="align-items-center ms-3 ms-lg-0">
+      <i class="fas fa-search fa-fw"></i>
+      <input
+        class="form-control"
+        id="search-input"
+        type="search"
+        aria-label="search"
+        autocomplete="off"
+        placeholder="搜索..."
+      >
+    </search>
+    <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">取消</button>
+  </div>
+</header>
+
+
+        <div class="row flex-grow-1">
+          <main aria-label="Main Content" class="col-12 col-lg-11 col-xl-9 px-md-4">
+            
+              <!-- Refactor the HTML structure -->
+
+
+
+<!--
+  In order to allow a wide table to scroll horizontally,
+  we suround the markdown table with `<div class="table-wrapper">` and `</div>`
+-->
+
+
+
+<!--
+  Fixed kramdown code highlight rendering:
+  https://github.com/penibelst/jekyll-compress-html/issues/101
+  https://github.com/penibelst/jekyll-compress-html/issues/71#issuecomment-188144901
+-->
+
+
+
+<!-- Change the icon of checkbox -->
+
+
+
+<!-- Handle images -->
+
+
+
+
+
+<!-- Add header for code snippets -->
+
+
+
+<!-- Create heading anchors -->
+
+
+
+
+
+  
+  
+
+  
+
+  
+  
+
+  
+    
+    
+
+    
+      
+        
+        
+      
+
+      
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+      
+      
+
+      
+    
+
+    
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+
+
+
+<!-- return -->
+
+
+
+
+
+
+
+
+
+
+<article class="px-1" data-toc="true">
+  <header>
+    <h1 data-toc-skip>安装 Chirpy 主题</h1>
+    
+
+    <div class="post-meta text-muted">
+      <!-- published date -->
+      <span>
+        发表于
+        <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1745164800"
+  data-df="YYYY/MM/DD"
+  
+    data-bs-toggle="tooltip" data-bs-placement="bottom"
+  
+>
+  2025/04/21
+</time>
+
+      </span>
+
+      <!-- lastmod date -->
+      
+
+      
+
+      <div class="d-flex justify-content-between">
+        <!-- author(s) -->
+        <span>
+          
+
+          作者
+
+          <em>
+            
+              
+                
+                
+              
+            
+          </em>
+        </span>
+
+        <div>
+          <!-- pageviews -->
+          
+
+          <!-- read time -->
+          <!-- Calculate the post's reading time, and display the word count in tooltip -->
+
+
+
+<!-- words per minute -->
+
+
+
+
+
+
+
+
+
+
+<!-- return element -->
+<span
+  class="readtime"
+  data-bs-toggle="tooltip"
+  data-bs-placement="bottom"
+  title="2041 字"
+>
+  <em>11 分钟</em>阅读</span>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  
+    <div id="toc-bar" class="d-flex align-items-center justify-content-between invisible">
+      <span class="label text-truncate">安装 Chirpy 主题</span>
+      <button type="button" class="toc-trigger btn me-1">
+        <i class="fa-solid fa-list-ul fa-fw"></i>
+      </button>
+    </div>
+
+    <button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm">
+      <span class="label ps-2 pe-1">文章内容</span>
+      <i class="fa-solid fa-angle-right fa-fw"></i>
+    </button>
+
+    <dialog id="toc-popup" class="p-0">
+      <div class="header d-flex flex-row align-items-center justify-content-between">
+        <div class="label text-truncate py-2 ms-4">安装 Chirpy 主题</div>
+        <button id="toc-popup-close" type="button" class="btn mx-1 my-1 opacity-75">
+          <i class="fas fa-close"></i>
+        </button>
+      </div>
+      <div id="toc-popup-content" class="px-4 py-3 pb-4"></div>
+    </dialog>
+  
+
+  <div class="content">
+    <p>从你的命令行输出看，你尝试运行 <code class="language-plaintext highlighter-rouge">npm install</code> 来安装 Chirpy 主题的前端依赖，但遇到了一些警告（<code class="language-plaintext highlighter-rouge">EBADENGINE Unsupported engine</code>），不过最终依赖还是成功安装了（<code class="language-plaintext highlighter-rouge">added 667 packages</code>）。以下是对输出的分析和后续步骤的建议，帮助你解决图片模糊问题并确保网站功能正常。</p>
+
+<hr />
+
+<h3 id="命令和输出分析"><span class="me-2">命令和输出分析</span><a href="#命令和输出分析" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3>
+
+<ol>
+  <li><strong>命令：<code class="language-plaintext highlighter-rouge">cd C:\Users\33261\Desktop\jekyll-theme-chirpy-master</code></strong>
+    <ul>
+      <li><strong>含义</strong>：更改当前工作目录到你的 Jekyll 项目根目录。</li>
+      <li><strong>作用</strong>：确保后续命令（如 <code class="language-plaintext highlighter-rouge">npm install</code>）在正确的目录下执行。</li>
+      <li><strong>注意</strong>：你重复运行了两次此命令，第二次是冗余的，因为你已经在目标目录中。</li>
+    </ul>
+  </li>
+  <li><strong>命令：<code class="language-plaintext highlighter-rouge">npm install</code></strong>
+    <ul>
+      <li><strong>含义</strong>：根据 <code class="language-plaintext highlighter-rouge">package.json</code> 文件安装项目所需的所有 Node.js 依赖。</li>
+      <li><strong>作用</strong>：为 Chirpy 主题安装前端依赖（如 JavaScript 库、CSS 处理器等），这些依赖用于支持图片懒加载、搜索功能、主题切换等动态功能。</li>
+    </ul>
+  </li>
+  <li><strong>警告：<code class="language-plaintext highlighter-rouge">npm warn EBADENGINE Unsupported engine {...}</code></strong>
+    <ul>
+      <li><strong>含义</strong>：多个依赖包（例如 <code class="language-plaintext highlighter-rouge">semantic-release</code>、<code class="language-plaintext highlighter-rouge">glob</code>、<code class="language-plaintext highlighter-rouge">minimatch</code> 等）声明它们需要 Node.js 版本为 20 或更高（<code class="language-plaintext highlighter-rouge">node: '&gt;=20.8.1'</code> 或 <code class="language-plaintext highlighter-rouge">node: '20 || &gt;=22'</code>），但你当前使用的 Node.js 版本是 <code class="language-plaintext highlighter-rouge">v18.20.7</code>。</li>
+      <li><strong>具体警告</strong>：
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">semantic-release@24.2.3</code> 需要 <code class="language-plaintext highlighter-rouge">node &gt;=20.8.1</code>。</li>
+          <li><code class="language-plaintext highlighter-rouge">glob@11.0.1</code> 需要 <code class="language-plaintext highlighter-rouge">node 20 || &gt;=22</code>。</li>
+          <li>类似警告出现在其他包（如 <code class="language-plaintext highlighter-rouge">minimatch</code>、<code class="language-plaintext highlighter-rouge">lru-cache</code> 等）。</li>
+        </ul>
+      </li>
+      <li><strong>影响</strong>：
+        <ul>
+          <li>这些警告表示你的 Node.js 版本低于依赖包的要求，可能导致某些功能不稳定或无法工作。</li>
+          <li>不过，<code class="language-plaintext highlighter-rouge">npm install</code> 仍然完成了（<code class="language-plaintext highlighter-rouge">added 667 packages</code>），说明这些依赖被强制安装，但运行时可能会出现兼容性问题。</li>
+        </ul>
+      </li>
+      <li><strong>解决方法</strong>：升级 Node.js 版本（见下文）。</li>
+    </ul>
+  </li>
+  <li><strong>输出：<code class="language-plaintext highlighter-rouge">&gt; jekyll-theme-chirpy@7.2.4 prepare</code></strong>
+    <ul>
+      <li><strong>含义</strong>：<code class="language-plaintext highlighter-rouge">npm install</code> 完成后，运行了 <code class="language-plaintext highlighter-rouge">package.json</code> 中定义的 <code class="language-plaintext highlighter-rouge">prepare</code> 脚本。</li>
+      <li><strong>作用</strong>：Chirpy 主题的 <code class="language-plaintext highlighter-rouge">prepare</code> 脚本执行了 <code class="language-plaintext highlighter-rouge">husky</code> 命令，用于设置 Git 钩子（例如提交前检查）。</li>
+      <li><strong>背景</strong>：<code class="language-plaintext highlighter-rouge">husky</code> 是一个工具，用于在 Git 操作（如 <code class="language-plaintext highlighter-rouge">git commit</code>）时运行脚本，确保代码质量。</li>
+    </ul>
+  </li>
+  <li><strong>输出：<code class="language-plaintext highlighter-rouge">added 667 packages in 29s</code></strong>
+    <ul>
+      <li><strong>含义</strong>：成功安装了 667 个 Node.js 包，耗时 29 秒。</li>
+      <li><strong>作用</strong>：这些包是 Chirpy 主题的前端依赖，包括图片加载、主题切换、搜索功能所需的库。</li>
+      <li><strong>背景</strong>：安装完成意味着前端资源已经准备好，但由于 Node.js 版本问题，部分功能可能需要进一步验证。</li>
+    </ul>
+  </li>
+  <li><strong>输出：<code class="language-plaintext highlighter-rouge">154 packages are looking for funding</code></strong>
+    <ul>
+      <li><strong>含义</strong>：有 154 个安装的包提示它们需要资金支持。</li>
+      <li><strong>作用</strong>：这是 npm 的提示，建议你运行 <code class="language-plaintext highlighter-rouge">npm fund</code> 查看这些包的资助信息。</li>
+      <li><strong>背景</strong>：你可以忽略此提示，除非你想为这些开源项目捐款。</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="为什么图片仍可能模糊"><span class="me-2">为什么图片仍可能模糊？</span><a href="#为什么图片仍可能模糊" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3>
+
+<p>在之前的分析中，图片模糊的原因是 Chirpy 主题的懒加载机制（显示模糊占位图，直到图片进入视口或被点击才会加载高清版本）。你运行了 <code class="language-plaintext highlighter-rouge">npm install</code>，前端依赖已安装，但可能存在以下问题导致图片加载仍不正常：</p>
+
+<ol>
+  <li><strong>Node.js 版本不兼容</strong>：
+    <ul>
+      <li>由于你的 Node.js 版本（<code class="language-plaintext highlighter-rouge">v18.20.7</code>）低于依赖要求的 <code class="language-plaintext highlighter-rouge">&gt;=20.8.1</code>，某些 JavaScript 功能（例如图片懒加载的脚本 <code class="language-plaintext highlighter-rouge">_javascript/modules/components/img-loading.js</code>）可能未正确执行。</li>
+      <li>这可能导致图片加载逻辑未触发，高清图片无法自动加载。</li>
+    </ul>
+  </li>
+  <li><strong>未运行初始化或构建命令</strong>：
+    <ul>
+      <li>Chirpy 主题可能需要运行 <code class="language-plaintext highlighter-rouge">npm run init</code> 或 <code class="language-plaintext highlighter-rouge">npm run build</code> 来生成前端资源（例如合并 JavaScript 和 CSS 文件）。</li>
+      <li>如果这些步骤未执行，图片加载脚本可能未正确初始化。</li>
+    </ul>
+  </li>
+  <li><strong>图片路径或配置问题</strong>：
+    <ul>
+      <li>如果 <code class="language-plaintext highlighter-rouge">_posts/2019-08-08-text-and-typography.md</code> 中的图片路径有误，高清图片可能无法加载。</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="解决方法"><span class="me-2">解决方法</span><a href="#解决方法" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3>
+
+<ol>
+  <li><strong>升级 Node.js 版本</strong>：
+    <ul>
+      <li><strong>步骤</strong>：
+        <ul>
+          <li>当前 Node.js 版本为 <code class="language-plaintext highlighter-rouge">v18.20.7</code>，而依赖需要 <code class="language-plaintext highlighter-rouge">&gt;=20.8.1</code>。</li>
+          <li>访问 <a href="https://nodejs.org/">Node.js 官网</a>，下载并安装最新 LTS 版本（截至 2025 年 4 月，推荐 Node.js 20.x 或更高）。</li>
+          <li>安装完成后，验证版本：
+            <div class="language-bash highlighter-rouge"><div class="code-header">
+        <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>node <span class="nt">-v</span>
+npm <span class="nt">-v</span>
+</pre></td></tr></tbody></table></code></div>            </div>
+            <p>确保 Node.js 版本为 <code class="language-plaintext highlighter-rouge">20.x</code> 或更高。</p>
+          </li>
+          <li>删除旧的 <code class="language-plaintext highlighter-rouge">node_modules</code> 和 <code class="language-plaintext highlighter-rouge">package-lock.json</code> 文件：
+            <div class="language-bash highlighter-rouge"><div class="code-header">
+        <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>del node_modules /s /q
+del package-lock.json
+</pre></td></tr></tbody></table></code></div>            </div>
+          </li>
+          <li>重新运行 <code class="language-plaintext highlighter-rouge">npm install</code>：
+            <div class="language-bash highlighter-rouge"><div class="code-header">
+        <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>npm <span class="nb">install</span>
+</pre></td></tr></tbody></table></code></div>            </div>
+          </li>
+          <li>升级后重新运行 <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code>，检查图片是否正常加载。</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>运行初始化或构建命令</strong>：
+    <ul>
+      <li>Chirpy 主题可能需要额外的初始化或构建步骤来生成前端资源。</li>
+      <li><strong>步骤</strong>：
+        <ul>
+          <li>运行：
+            <div class="language-bash highlighter-rouge"><div class="code-header">
+        <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>npm run init
+</pre></td></tr></tbody></table></code></div>            </div>
+            <p>或：</p>
+            <div class="language-bash highlighter-rouge"><div class="code-header">
+        <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>npm run build
+</pre></td></tr></tbody></table></code></div>            </div>
+            <p>（具体命令取决于 Chirpy 文档，建议查看 <a href="https://github.com/cotes2020/jekyll-theme-chirpy">Chirpy GitHub</a> 的说明）。</p>
+          </li>
+          <li>完成后，重新运行：
+            <div class="language-bash highlighter-rouge"><div class="code-header">
+        <span data-label-text="Shell"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>bundle <span class="nb">exec </span>jekyll serve
+</pre></td></tr></tbody></table></code></div>            </div>
+          </li>
+          <li>刷新浏览器，检查图片是否自动加载高清版本。</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>检查图片路径</strong>：
+    <ul>
+      <li><strong>步骤</strong>：
+        <ul>
+          <li>打开 <code class="language-plaintext highlighter-rouge">_posts/2019-08-08-text-and-typography.md</code>，找到图片的 Markdown 语法，例如：
+            <div class="language-markdown highlighter-rouge"><div class="code-header">
+        <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="p">![</span><span class="nv">Responsive rendering of Chirpy theme on multiple devices.</span><span class="p">](</span><span class="sx">/_posts/2019-08-08-text-and-typography/responsive-rendering.png</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></div>            </div>
+          </li>
+          <li>确保图片文件（如 <code class="language-plaintext highlighter-rouge">responsive-rendering.png</code>）存在于指定路径。</li>
+          <li>如果路径错误，调整为正确路径，重新运行 <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code>。</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>检查浏览器开发者工具</strong>：
+    <ul>
+      <li><strong>步骤</strong>：
+        <ul>
+          <li>打开浏览器开发者工具（F12），切换到“网络”选项卡。</li>
+          <li>刷新页面，查看图片请求是否成功加载：
+            <ul>
+              <li>如果图片请求返回 404，说明路径有误，需调整 Markdown 文件中的路径。</li>
+              <li>如果请求被拦截，检查是否有广告拦截器或浏览器扩展干扰。</li>
+            </ul>
+          </li>
+          <li>切换到“控制台”选项卡，查看是否有 JavaScript 错误，可能与 Node.js 版本不兼容有关。</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>禁用懒加载（可选）</strong>：
+    <ul>
+      <li>如果你不想要懒加载和模糊占位效果，可以禁用。</li>
+      <li><strong>步骤</strong>：
+        <ul>
+          <li>打开 <code class="language-plaintext highlighter-rouge">_sass/pages/_post.scss</code>，查找与图片模糊相关的样式，例如：
+            <div class="language-scss highlighter-rouge"><div class="code-header">
+        <span data-label-text="SCSS"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="nt">img</span><span class="o">[</span><span class="nt">data-src</span><span class="o">]</span> <span class="p">{</span>
+  <span class="nl">filter</span><span class="p">:</span> <span class="nf">blur</span><span class="p">(</span><span class="m">5px</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></div>            </div>
+            <p>删除或注释掉 <code class="language-plaintext highlighter-rouge">filter: blur(5px);</code>。</p>
+          </li>
+          <li>或者，修改 <code class="language-plaintext highlighter-rouge">_javascript/modules/components/img-loading.js</code>，禁用懒加载逻辑（需备份文件）。</li>
+          <li>重新运行 <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code>，检查效果。</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="下一步建议"><span class="me-2">下一步建议</span><a href="#下一步建议" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3>
+
+<ol>
+  <li><strong>验证图片加载</strong>：
+    <ul>
+      <li>升级 Node.js 并运行 <code class="language-plaintext highlighter-rouge">npm run init</code> 或 <code class="language-plaintext highlighter-rouge">npm run build</code> 后，刷新 <code class="language-plaintext highlighter-rouge">http://127.0.0.1:4000/</code>，检查图片是否自动加载高清版本。</li>
+      <li>如果仍需点击才能加载高清版本，说明懒加载功能正常工作，这是 Chirpy 主题的默认行为。</li>
+    </ul>
+  </li>
+  <li><strong>测试其他功能</strong>：
+    <ul>
+      <li>确认 Chirpy 主题的其他动态功能是否正常：
+        <ul>
+          <li>搜索功能（顶部搜索栏）。</li>
+          <li>主题切换（明亮/暗黑模式）。</li>
+          <li>分类和标签页面。</li>
+        </ul>
+      </li>
+      <li>如果功能不正常，可能是 Node.js 版本问题导致，升级后应解决。</li>
+    </ul>
+  </li>
+  <li><strong>添加自定义内容</strong>：
+    <ul>
+      <li>编辑 <code class="language-plaintext highlighter-rouge">_posts</code> 目录中的文章，或添加新文章，格式如下：
+        <div class="language-markdown highlighter-rouge"><div class="code-header">
+        <span data-label-text="Markdown"><i class="fas fa-code fa-fw small"></i></span>
+      <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="nn">---</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">post</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">My</span><span class="nv"> </span><span class="s">First</span><span class="nv"> </span><span class="s">Post"</span>
+<span class="na">date</span><span class="pi">:</span> <span class="s">2025-04-21 10:00:00 +0800</span>
+<span class="na">categories</span><span class="pi">:</span> <span class="s">blog</span>
+<span class="nn">---</span>
+Hello, this is my first blog post!
+     
+<span class="p">![</span><span class="nv">My Image</span><span class="p">](</span><span class="sx">/assets/img/my-image.jpg</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></div>        </div>
+      </li>
+      <li>确保图片路径正确，Jekyll 会自动重新生成。</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h3 id="总结"><span class="me-2">总结</span><a href="#总结" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3>
+
+<ul>
+  <li><strong>问题原因</strong>：
+    <ul>
+      <li>图片模糊是 Chirpy 主题的懒加载机制导致，但高清图片未自动加载可能是因为 Node.js 版本（<code class="language-plaintext highlighter-rouge">v18.20.7</code>）低于依赖要求（<code class="language-plaintext highlighter-rouge">&gt;=20.8.1</code>），导致 JavaScript 脚本未正确运行。</li>
+      <li>也可能是未运行 <code class="language-plaintext highlighter-rouge">npm run init</code> 或 <code class="language-plaintext highlighter-rouge">npm run build</code>，前端资源未完全初始化。</li>
+    </ul>
+  </li>
+  <li><strong>解决方法</strong>：
+    <ol>
+      <li>升级 Node.js 到 20.x 或更高版本，重新安装依赖。</li>
+      <li>运行 <code class="language-plaintext highlighter-rouge">npm run init</code> 或 <code class="language-plaintext highlighter-rouge">npm run build</code> 初始化前端资源。</li>
+      <li>检查图片路径和浏览器请求状态。</li>
+      <li>（可选）禁用懒加载和模糊效果。</li>
+    </ol>
+  </li>
+  <li><strong>反馈</strong>：
+    <ul>
+      <li>如果图片仍无法正常加载，请提供：
+        <ul>
+          <li>升级 Node.js 后的版本（<code class="language-plaintext highlighter-rouge">node -v</code> 输出）。</li>
+          <li><code class="language-plaintext highlighter-rouge">_posts/2019-08-08-text-and-typography.md</code> 中图片部分的代码。</li>
+          <li>浏览器开发者工具中的图片请求状态（是否有 404 或其他错误）。</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>我可以继续协助你解决问题！</p>
+
+  </div>
+
+  <div class="post-tail-wrapper text-muted">
+    <!-- categories -->
+    
+      <div class="post-meta mb-3">
+        <i class="far fa-folder-open fa-fw me-1"></i>
+        
+          <a href="/categories/jekyll/">Jekyll</a>
+      </div>
+    
+
+    <!-- tags -->
+    
+
+    <div
+      class="
+        post-tail-bottom
+        d-flex justify-content-between align-items-center mt-5 pb-2
+      "
+    >
+      <div class="license-wrapper">
+        
+          
+
+          本文由作者按照 
+        <a href="https://creativecommons.org/licenses/by/4.0/">
+          CC BY 4.0
+        </a>
+         进行授权
+        
+      </div>
+
+      <!-- Post sharing snippet -->
+
+<div class="share-wrapper d-flex align-items-center">
+  <span class="share-label text-muted">分享</span>
+  <span class="share-icons">
+    
+    
+    
+
+    
+
+      
+
+      <a href="https://twitter.com/intent/tweet?text=%E5%AE%89%E8%A3%85%20Chirpy%20%E4%B8%BB%E9%A2%98%20-%20%E5%AD%90%E4%BC%A0%E7%9A%84%E5%8D%9A%E5%AE%A2&url=https%3A%2F%2Fzichuantang.github.io%2Fposts%2F%25E5%25AE%2589%25E8%25A3%2585-Chirpy-%25E4%25B8%25BB%25E9%25A2%2598%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter">
+        <i class="fa-fw fa-brands fa-square-x-twitter"></i>
+      </a>
+    
+
+      
+
+      <a href="https://www.facebook.com/sharer/sharer.php?title=%E5%AE%89%E8%A3%85%20Chirpy%20%E4%B8%BB%E9%A2%98%20-%20%E5%AD%90%E4%BC%A0%E7%9A%84%E5%8D%9A%E5%AE%A2&u=https%3A%2F%2Fzichuantang.github.io%2Fposts%2F%25E5%25AE%2589%25E8%25A3%2585-Chirpy-%25E4%25B8%25BB%25E9%25A2%2598%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook" aria-label="Facebook">
+        <i class="fa-fw fab fa-facebook-square"></i>
+      </a>
+    
+
+      
+
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fzichuantang.github.io%2Fposts%2F%25E5%25AE%2589%25E8%25A3%2585-Chirpy-%25E4%25B8%25BB%25E9%25A2%2598%2F&text=%E5%AE%89%E8%A3%85%20Chirpy%20%E4%B8%BB%E9%A2%98%20-%20%E5%AD%90%E4%BC%A0%E7%9A%84%E5%8D%9A%E5%AE%A2" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Telegram" aria-label="Telegram">
+        <i class="fa-fw fab fa-telegram"></i>
+      </a>
+    
+
+    <button
+      id="copy-link"
+      aria-label="Copy link"
+      class="btn small"
+      data-bs-toggle="tooltip"
+      data-bs-placement="top"
+      title="分享链接"
+      data-title-succeed="链接已复制！"
+    >
+      <i class="fa-fw fas fa-link pe-none fs-6"></i>
+    </button>
+  </span>
+</div>
+
+    </div>
+    <!-- .post-tail-bottom -->
+  </div>
+  <!-- div.post-tail-wrapper -->
+</article>
+
+
+            
+          </main>
+
+          <!-- panel -->
+          <aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 text-muted">
+            <div class="access">
+              <!-- Get 5 last posted/updated posts -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <section id="access-lastmod">
+    <h2 class="panel-heading">最近更新</h2>
+    <ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E5%81%A5%E8%BA%AB%E6%97%A5%E7%A8%8B/">健身-日程</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/">安装 Chirpy 主题</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E5%85%A8%E9%9D%A2%E8%83%B8%E8%83%8C%E8%82%A9%E8%AE%AD%E7%BB%83%E6%8C%87%E5%8D%97-%E5%8A%A8%E4%BD%9C-%E6%8A%80%E5%B7%A7%E4%B8%8E%E7%A7%91%E5%AD%A6%E8%AE%A1%E5%88%92/">全面胸背肩训练指南：动作、技巧与科学计划</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E8%AE%AD%E7%BB%83-%E9%A5%AE%E9%A3%9F%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/">训练、饮食与恢复的终极指南</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E5%BF%85%E8%A3%85/">必装</a>
+        </li>
+      
+    </ul>
+  </section>
+  <!-- #access-lastmod -->
+
+
+              <!-- The trending tags list -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+
+
+  <section>
+    <h2 class="panel-heading">热门标签</h2>
+    <div class="d-flex flex-wrap mt-3 mb-1 me-3">
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/favicon/">favicon</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/getting-started/">getting started</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/writing/">writing</a>
+      
+    </div>
+  </section>
+
+
+            </div>
+
+            
+              
+              
+
+
+
+
+
+
+  <div class="toc-border-cover z-3"></div>
+  <section id="toc-wrapper" class="invisible position-sticky ps-0 pe-4 pb-4">
+    <h2 class="panel-heading ps-3 pb-2 mb-0">文章内容</h2>
+    <nav id="toc"></nav>
+  </section>
+
+
+            
+          </aside>
+        </div>
+
+        <div class="row">
+          <!-- tail -->
+          <div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4">
+            
+              
+              <!-- Recommend the other 3 posts according to the tags and categories of the current post. -->
+
+<!-- The total size of related posts -->
+
+
+<!-- An random integer that bigger than 0 -->
+
+
+<!-- Equals to TAG_SCORE / {max_categories_hierarchy} -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <aside id="related-posts" aria-labelledby="related-label">
+    <h3 class="mb-4" id="related-label">相关文章</h3>
+    <nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4">
+      
+        <article class="col">
+          <a href="/posts/%E5%81%A5%E8%BA%AB%E6%97%A5%E7%A8%8B/" class="post-preview card h-100">
+            <div class="card-body">
+              <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1746288000"
+  data-df="YYYY/MM/DD"
+  
+>
+  2025/05/04
+</time>
+
+              <h4 class="pt-0 my-2">健身-日程</h4>
+              <div class="text-muted">
+                <p>日期         事件                                 5月4日         练背。继续负重10kg引体。                       5月3日         练胸。继续史密斯80kg做几组，差点给我直接送走。                       5月2日         休息。                       5...</p>
+              </div>
+            </div>
+          </a>
+        </article>
+      
+        <article class="col">
+          <a href="/posts/%E5%85%A8%E9%9D%A2%E8%83%B8%E8%83%8C%E8%82%A9%E8%AE%AD%E7%BB%83%E6%8C%87%E5%8D%97-%E5%8A%A8%E4%BD%9C-%E6%8A%80%E5%B7%A7%E4%B8%8E%E7%A7%91%E5%AD%A6%E8%AE%A1%E5%88%92/" class="post-preview card h-100">
+            <div class="card-body">
+              <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1744560000"
+  data-df="YYYY/MM/DD"
+  
+>
+  2025/04/14
+</time>
+
+              <h4 class="pt-0 my-2">全面胸背肩训练指南：动作、技巧与科学计划</h4>
+              <div class="text-muted">
+                <p>杠铃平板卧推技巧总结    杠铃平板卧推是锻炼胸大肌、肱三头肌和肩部肌群的经典动作。以下是一些技巧，帮助你安全、高效地完成动作：     正确姿势：            躺姿：平躺在卧推凳上，双脚稳稳踩地，臀部、背部和头部贴紧凳面。       肩胛收紧：肩胛骨向内收紧并下沉，形成稳定的支撑，保护肩关节。       握距：双手握杠，握距比肩稍宽（约1.5倍肩宽），手腕保持中立。     ...</p>
+              </div>
+            </div>
+          </a>
+        </article>
+      
+        <article class="col">
+          <a href="/posts/%E8%AE%AD%E7%BB%83-%E9%A5%AE%E9%A3%9F%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/" class="post-preview card h-100">
+            <div class="card-body">
+              <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1743523200"
+  data-df="YYYY/MM/DD"
+  
+>
+  2025/04/02
+</time>
+
+              <h4 class="pt-0 my-2">训练、饮食与恢复的终极指南</h4>
+              <div class="text-muted">
+                <p>1. 训练技巧          渐进超负荷（Progressive Overload） 这是增肌的基石。逐渐增加重量、次数或训练强度，确保肌肉不断受到挑战。例如，每周尝试增加2.5-5公斤的负重，或者多做1-2次重复。           复合动作优先 冠军们通常以复合动作（如深蹲、硬拉、卧推、引体向上）为核心，因为这些动作能同时刺激多个肌群，促进整体生长。孤立动作（如二头弯举）用于辅助。...</p>
+              </div>
+            </div>
+          </a>
+        </article>
+      
+    </nav>
+  </aside>
+  <!-- #related-posts -->
+
+
+            
+              
+              <!-- Navigation buttons at the bottom of the post. -->
+
+<nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation">
+  
+  
+
+  
+    <a
+      href="/posts/%E5%85%A8%E9%9D%A2%E8%83%B8%E8%83%8C%E8%82%A9%E8%AE%AD%E7%BB%83%E6%8C%87%E5%8D%97-%E5%8A%A8%E4%BD%9C-%E6%8A%80%E5%B7%A7%E4%B8%8E%E7%A7%91%E5%AD%A6%E8%AE%A1%E5%88%92/"
+      class="btn btn-outline-primary"
+      aria-label="上一篇"
+    >
+      <p>全面胸背肩训练指南：动作、技巧与科学计划</p>
+    </a>
+  
+
+  
+    <a
+      href="/posts/%E5%81%A5%E8%BA%AB%E6%97%A5%E7%A8%8B/"
+      class="btn btn-outline-primary"
+      aria-label="下一篇"
+    >
+      <p>健身-日程</p>
+    </a>
+  
+</nav>
+
+            
+
+            <!-- The Footer -->
+
+<footer
+  aria-label="Site Info"
+  class="
+    d-flex flex-column justify-content-center text-muted
+    flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3
+  "
+>
+  <p>©
+    <time>2025</time>
+
+    
+      <a href="https://github.com/zichuantang">唐子传</a>.
+    
+
+    
+      <span
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="除非另有说明，本网站上的博客文章均由作者按照知识共享署名 4.0 国际 (CC BY 4.0) 许可协议进行授权。"
+      >保留部分权利。</span>
+    
+  </p>
+
+  <p>本站采用 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 主题 <a
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="v7.2.4"
+        href="https://github.com/cotes2020/jekyll-theme-chirpy"
+        target="_blank"
+        rel="noopener"
+      >Chirpy</a>
+  </p>
+</footer>
+
+          </div>
+        </div>
+
+        <!-- The Search results -->
+
+<div id="search-result-wrapper" class="d-flex justify-content-center d-none">
+  <div class="col-11 content">
+    <div id="search-hints">
+      <!-- The trending tags list -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+
+
+  <section>
+    <h2 class="panel-heading">热门标签</h2>
+    <div class="d-flex flex-wrap mt-3 mb-1 me-3">
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/favicon/">favicon</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/getting-started/">getting started</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/typography/">typography</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/writing/">writing</a>
+      
+    </div>
+  </section>
+
+
+    </div>
+    <div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div>
+  </div>
+</div>
+
+      </div>
+
+      <aside aria-label="Scroll to Top">
+        <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow">
+          <i class="fas fa-angle-up"></i>
+        </button>
+      </aside>
+    </div>
+
+    <div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div>
+
+    
+      <aside
+  id="notification"
+  class="toast"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+  data-bs-animation="true"
+  data-bs-autohide="false"
+>
+  <div class="toast-header">
+    <button
+      type="button"
+      class="btn-close ms-auto"
+      data-bs-dismiss="toast"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="toast-body text-center pt-0">
+    <p class="px-2 mb-3">发现新版本的内容。</p>
+    <button type="button" class="btn btn-primary" aria-label="Update">
+      更新
+    </button>
+  </div>
+</aside>
+
+    
+
+    <!-- Embedded scripts -->
+
+    
+      
+      <!-- The comments switcher -->
+
+
+    
+
+    <!--
+  Jekyll Simple Search loader
+  See: <https://github.com/christian-fei/Simple-Jekyll-Search>
+-->
+
+
+
+
+
+<script>
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    SimpleJekyllSearch({
+      searchInput: document.getElementById('search-input'),
+      resultsContainer: document.getElementById('search-results'),
+      json: '/assets/js/data/search.json',
+      searchResultTemplate: '  <article class="px-1 px-sm-2 px-lg-4 px-xl-0">    <header>      <h2><a href="{url}">{title}</a></h2>      <div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1">        {categories}        {tags}      </div>    </header>    <p>{content}</p>  </article>',
+      noResultsText: '<p class="mt-5">搜索结果为空</p>',
+      templateMiddleware: function(prop, value, template) {
+        if (prop === 'categories') {
+          if (value === '') {
+            return `${value}`;
+          } else {
+            return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`;
+          }
+        }
+
+        if (prop === 'tags') {
+          if (value === '') {
+            return `${value}`;
+          } else {
+            return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`;
+          }
+        }
+      }
+    });
+  });
+</script>
+
+  </body>
+</html>
+

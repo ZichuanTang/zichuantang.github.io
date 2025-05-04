@@ -4,7 +4,7 @@
   <id>https://zichuantang.github.io/</id>
   <title>子传的博客</title>
   <subtitle>一个极简、响应式且功能丰富的 Jekyll 主题，用于技术写作。</subtitle>
-  <updated>2025-05-05T00:28:48+08:00</updated>
+  <updated>2025-05-05T00:30:04+08:00</updated>
   <author>
     <name>唐子传</name>
     <uri>https://zichuantang.github.io/</uri>
@@ -20,105 +20,121 @@
 
   
   <entry>
-    <title>Customize the Favicon</title>
-    <link href="https://zichuantang.github.io/posts/customize-the-favicon/" rel="alternate" type="text/html" title="Customize the Favicon" />
-    <published>2019-08-11T00:34:00+08:00</published>
+    <title>健身-日程</title>
+    <link href="https://zichuantang.github.io/posts/%E5%81%A5%E8%BA%AB%E6%97%A5%E7%A8%8B/" rel="alternate" type="text/html" title="健身-日程" />
+    <published>2025-05-04T00:00:00+08:00</published>
   
-    <updated>2019-08-11T00:34:00+08:00</updated>
+    <updated>2025-05-04T00:00:00+08:00</updated>
   
-    <id>https://zichuantang.github.io/posts/customize-the-favicon/</id>
-    <content type="text/html" src="https://zichuantang.github.io/posts/customize-the-favicon/" />
+    <id>https://zichuantang.github.io/posts/%E5%81%A5%E8%BA%AB%E6%97%A5%E7%A8%8B/</id>
+    <content type="text/html" src="https://zichuantang.github.io/posts/%E5%81%A5%E8%BA%AB%E6%97%A5%E7%A8%8B/" />
     <author>
-      <name>cotes</name>
+      <name>TangZichuan</name>
     </author>
 
   
     
-    <category term="Blogging" />
-    
-    <category term="Tutorial" />
+    <category term="Jekyll" />
     
   
 
-  <summary>The favicons of Chirpy are placed in the directory assets/img/favicons/. You may want to replace them with your own. The following sections will guide you to create and replace the default favicons.  Generate the favicon  Prepare a square image (PNG, JPG, or SVG) with a size of 512x512 or more, and then go to the online tool Real Favicon Generator and click the button Select your Favicon image ...</summary>
+  <summary>日期         事件                                 5月4日         练背。继续负重10kg引体。                       5月3日         练胸。继续史密斯80kg做几组，差点给我直接送走。                       5月2日         休息。                       5月1日         练肩。昨天、前天，练胸、练背太到位了，这天一些累，水一水，嘿嘿                       4月30日         练背。解锁引体负重10kg。                       4月29日         练胸。标准杆80kg起来了。哈哈哈…现有的健身房里的器械还是觉得在用自由杆冲极限之前先用史密斯推几个极限周期几率会大得很多。       ...</summary>
 
   </entry>
 
   
   <entry>
-    <title>Getting Started</title>
-    <link href="https://zichuantang.github.io/posts/getting-started/" rel="alternate" type="text/html" title="Getting Started" />
-    <published>2019-08-09T20:55:00+08:00</published>
+    <title>安装 Chirpy 主题</title>
+    <link href="https://zichuantang.github.io/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/" rel="alternate" type="text/html" title="安装 Chirpy 主题" />
+    <published>2025-04-21T00:00:00+08:00</published>
   
-    <updated>2019-08-09T20:55:00+08:00</updated>
+    <updated>2025-04-21T00:00:00+08:00</updated>
   
-    <id>https://zichuantang.github.io/posts/getting-started/</id>
-    <content type="text/html" src="https://zichuantang.github.io/posts/getting-started/" />
+    <id>https://zichuantang.github.io/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/</id>
+    <content type="text/html" src="https://zichuantang.github.io/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/" />
     <author>
-      <name>cotes</name>
+      <name>TangZichuan</name>
     </author>
 
   
     
-    <category term="Blogging" />
-    
-    <category term="Tutorial" />
+    <category term="Jekyll" />
     
   
 
-  <summary>Get started with Chirpy basics in this comprehensive overview. You will learn how to install, configure, and use your first Chirpy-based website, as well as deploy it to a web server.</summary>
+  <summary>从你的命令行输出看，你尝试运行 npm install 来安装 Chirpy 主题的前端依赖，但遇到了一些警告（EBADENGINE Unsupported engine），不过最终依赖还是成功安装了（added 667 packages）。以下是对输出的分析和后续步骤的建议，帮助你解决图片模糊问题并确保网站功能正常。    命令和输出分析     命令：cd C:\Users\33261\Desktop\jekyll-theme-chirpy-master            含义：更改当前工作目录到你的 Jekyll 项目根目录。       作用：确保后续命令（如 npm install）在正确的目录下执行。       注意：你重复运行了两次此命令，第二次是冗余的，因为你已经在目标目录中。           命令：npm install            含义：根据 ...</summary>
 
   </entry>
 
   
   <entry>
-    <title>Writing a New Post</title>
-    <link href="https://zichuantang.github.io/posts/write-a-new-post/" rel="alternate" type="text/html" title="Writing a New Post" />
-    <published>2019-08-08T14:10:00+08:00</published>
+    <title>全面胸背肩训练指南：动作、技巧与科学计划</title>
+    <link href="https://zichuantang.github.io/posts/%E5%85%A8%E9%9D%A2%E8%83%B8%E8%83%8C%E8%82%A9%E8%AE%AD%E7%BB%83%E6%8C%87%E5%8D%97-%E5%8A%A8%E4%BD%9C-%E6%8A%80%E5%B7%A7%E4%B8%8E%E7%A7%91%E5%AD%A6%E8%AE%A1%E5%88%92/" rel="alternate" type="text/html" title="全面胸背肩训练指南：动作、技巧与科学计划" />
+    <published>2025-04-14T00:00:00+08:00</published>
   
-    <updated>2019-08-08T14:10:00+08:00</updated>
+    <updated>2025-04-14T00:00:00+08:00</updated>
   
-    <id>https://zichuantang.github.io/posts/write-a-new-post/</id>
-    <content type="text/html" src="https://zichuantang.github.io/posts/write-a-new-post/" />
+    <id>https://zichuantang.github.io/posts/%E5%85%A8%E9%9D%A2%E8%83%B8%E8%83%8C%E8%82%A9%E8%AE%AD%E7%BB%83%E6%8C%87%E5%8D%97-%E5%8A%A8%E4%BD%9C-%E6%8A%80%E5%B7%A7%E4%B8%8E%E7%A7%91%E5%AD%A6%E8%AE%A1%E5%88%92/</id>
+    <content type="text/html" src="https://zichuantang.github.io/posts/%E5%85%A8%E9%9D%A2%E8%83%B8%E8%83%8C%E8%82%A9%E8%AE%AD%E7%BB%83%E6%8C%87%E5%8D%97-%E5%8A%A8%E4%BD%9C-%E6%8A%80%E5%B7%A7%E4%B8%8E%E7%A7%91%E5%AD%A6%E8%AE%A1%E5%88%92/" />
     <author>
-      <name>cotes</name>
+      <name>TangZichuan</name>
     </author>
 
   
     
-    <category term="Blogging" />
-    
-    <category term="Tutorial" />
+    <category term="Jekyll" />
     
   
 
-  <summary>This tutorial will guide you how to write a post in the Chirpy template, and it’s worth reading even if you’ve used Jekyll before, as many features require specific variables to be set.  Naming and Path  Create a new file named YYYY-MM-DD-TITLE.EXTENSION and put it in the _posts of the root directory. Please note that the EXTENSION must be one of md and markdown. If you want to save time of cre...</summary>
+  <summary>杠铃平板卧推技巧总结    杠铃平板卧推是锻炼胸大肌、肱三头肌和肩部肌群的经典动作。以下是一些技巧，帮助你安全、高效地完成动作：     正确姿势：            躺姿：平躺在卧推凳上，双脚稳稳踩地，臀部、背部和头部贴紧凳面。       肩胛收紧：肩胛骨向内收紧并下沉，形成稳定的支撑，保护肩关节。       握距：双手握杠，握距比肩稍宽（约1.5倍肩宽），手腕保持中立。           动作轨迹：            下放：缓慢下放杠铃至胸部中部（乳头线附近），肘部与身体呈45°角，避免完全外展。       推起：用胸部发力，将杠铃推回起始位置，肘部不要完全锁死，保持控制。       呼吸：下放时吸气，推起时呼气。           发力要点：            主要靠胸大肌发力，避免过度用手臂或肩膀。       腿部和臀部保持稳定，提供额外支撑（腿部驱...</summary>
 
   </entry>
 
   
   <entry>
-    <title>Text and Typography</title>
-    <link href="https://zichuantang.github.io/posts/text-and-typography/" rel="alternate" type="text/html" title="Text and Typography" />
-    <published>2019-08-08T11:33:00+08:00</published>
+    <title>训练、饮食与恢复的终极指南</title>
+    <link href="https://zichuantang.github.io/posts/%E8%AE%AD%E7%BB%83-%E9%A5%AE%E9%A3%9F%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/" rel="alternate" type="text/html" title="训练、饮食与恢复的终极指南" />
+    <published>2025-04-02T00:00:00+08:00</published>
   
-    <updated>2019-08-08T11:33:00+08:00</updated>
+    <updated>2025-04-02T00:00:00+08:00</updated>
   
-    <id>https://zichuantang.github.io/posts/text-and-typography/</id>
-    <content type="text/html" src="https://zichuantang.github.io/posts/text-and-typography/" />
+    <id>https://zichuantang.github.io/posts/%E8%AE%AD%E7%BB%83-%E9%A5%AE%E9%A3%9F%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/</id>
+    <content type="text/html" src="https://zichuantang.github.io/posts/%E8%AE%AD%E7%BB%83-%E9%A5%AE%E9%A3%9F%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/" />
     <author>
-      <name>cotes</name>
+      <name>TangZichuan</name>
     </author>
 
   
     
-    <category term="Blogging" />
-    
-    <category term="Demo" />
+    <category term="Jekyll" />
     
   
 
-  <summary>Examples of text, typography, math equations, diagrams, flowcharts, pictures, videos, and more.</summary>
+  <summary>1. 训练技巧          渐进超负荷（Progressive Overload） 这是增肌的基石。逐渐增加重量、次数或训练强度，确保肌肉不断受到挑战。例如，每周尝试增加2.5-5公斤的负重，或者多做1-2次重复。           复合动作优先 冠军们通常以复合动作（如深蹲、硬拉、卧推、引体向上）为核心，因为这些动作能同时刺激多个肌群，促进整体生长。孤立动作（如二头弯举）用于辅助。           训练量与频率 每块肌肉每周训练2次被认为是最佳频率。每次训练目标是8-12组，每组6-12次（力量与体积的平衡）。例如，胸肌可以安排周一推胸，周四再练一次。           时间张力（Time Under Tension, TUT） 控制动作速度，比如下放哑铃时用3-4秒，增加肌肉的张力时间，能刺激更多肌纤维生长。           周期化训练 避免平台期，冠军常采用周...</summary>
+
+  </entry>
+
+  
+  <entry>
+    <title>必装</title>
+    <link href="https://zichuantang.github.io/posts/%E5%BF%85%E8%A3%85/" rel="alternate" type="text/html" title="必装" />
+    <published>2025-03-31T00:00:00+08:00</published>
+  
+    <updated>2025-03-31T00:00:00+08:00</updated>
+  
+    <id>https://zichuantang.github.io/posts/%E5%BF%85%E8%A3%85/</id>
+    <content type="text/html" src="https://zichuantang.github.io/posts/%E5%BF%85%E8%A3%85/" />
+    <author>
+      <name>TangZichuan</name>
+    </author>
+
+  
+    
+    <category term="Jekyll" />
+    
+  
+
+  <summary>Bandizip           微信           Google Chrome Grok/GHBK/莫老师/油猴/答题脚本           Visual Studio Code           IntelliJ IDEA           YesPlayMusic           SakuraCat           StartAllBack           PyCharm           MySQL           Navicat Premium           Typora           闪电搜索           CCleaner           Wallpaper           WPS Office 专业版           Steam</summary>
 
   </entry>
 
