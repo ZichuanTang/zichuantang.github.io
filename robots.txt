@@ -2,4 +2,4 @@ User-agent: *
 
 Disallow: /norobots/
 
-Sitemap: https://zichuantang.github.io/zichuantang/sitemap.xml
+Sitemap: https://zichuantang.github.io/sitemap.xml
