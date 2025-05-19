@@ -19,7 +19,7 @@ jobs:
           gem install bundler
           bundle install
           bundle exec jekyll build
-      - uses: peaceiris/actions-gh-pages@v3
+      - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认 token
           publish_dir: ./_site
