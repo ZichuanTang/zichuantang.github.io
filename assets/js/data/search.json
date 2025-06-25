@@ -42,8 +42,8 @@
   {
     "title": "濮院男大居然重装了MySQL！并且还把重装后的问题全都解决了!",
     "url": "/posts/%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL-%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!/",
-    "categories": "Jekyll",
-    "tags": "",
+    "categories": "原创, 健身",
+    "tags": "健身",
     "date": "2025-03-15 00:00:00 +0800",
     "content": "事因MySQL好久没用了，如何点开就打不开了，密码一致错…如何决心重装！   问ChatGPT把原本留下的能删的都删了，重装后输入这个指令一直报错：  PS C:\Users\33261&amp;gt; mysql -u root     ERROR 2003 (HY000): Can’t connect to MySQL server on ‘localhost:3306’ (10061)   一..."
   },

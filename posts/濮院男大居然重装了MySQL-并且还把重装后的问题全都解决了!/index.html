@@ -31,7 +31,7 @@
   <!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="濮院男大居然重装了MySQL！并且还把重装后的问题全都解决了!" />
-<meta name="author" content="TangZichuan" />
+<meta name="author" content="Tang Zichuan" />
 <meta property="og:locale" content="zh_CN" />
 <meta name="description" content="事因MySQL好久没用了，如何点开就打不开了，密码一致错…如何决心重装！ 问ChatGPT把原本留下的能删的都删了，重装后输入这个指令一直报错： PS C:\Users\33261&gt; mysql -u root ERROR 2003 (HY000): Can’t connect to MySQL server on ‘localhost:3306’ (10061) 一直报这个错，一直报这个错… 这个看似是端口问题，所以， 使用 netstat 检查端口占用情况：确保 3306 端口没有被其他应用占用： 1 cmd 1 netstat -ano | findstr :3306 结果上面之后问了AI就来到了最最最关键的代码了， mysqld –skip-grant-tables –console 1 mysqld --skip-grant-tables --console 这个代码是检查你MySQL遇到的问题的（以我的理解），接下来是我一直输密码一直错，问题改密码的命令，有很多改密码的命令，但这个好像才适合我的MySQL 9.2.0，然后我就运行了，改了，好像没啥用，密码还是输了就错…所以这个应该不是很重要， 直接设置明文密码 在 MySQL 9.2.0 中， authentication_string 可以直接存储明文密码，MySQL 会自动处理加密。运行以下命令： sql 收起取消自动换行复制 1 UPDATE mysql.user SET authentication_string = &#39;123456&#39; WHERE User = &#39;root&#39; AND Host = &#39;localhost&#39;; 注意：这里去掉了 PASSWORD() 函数，直接用明文 ‘123456’。 ‘123456’ 是你要设置的新密码，可以替换成其他密码。 然后这个代码也试试， 1 2 3 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;; FLUSH PRIVILEGES; EXIT; 最后， 1 mysql -u root -p 总结，就是你也遇到这个问题， 1 2 PS C:\Users\33261&gt; mysql -u root ERROR 2003 (HY000): Can&#39;t connect to MySQL server on &#39;localhost:3306&#39; (10061) 你就先输入这个命令， 1 mysqld --skip-grant-tables --console 来查询你遇到的具体问题，把这些问题给AI，然后一个个解决。 这里面就很多，我举例几个： 你的MySQL文件夹下没用这个my.ini或者my.cnf文件，这个是配置文件，你就自己创建，并且这两个我试了很久最后放置的是这样， 这个my.ini里面是 1 2 3 4 5 6 [mysqld] port = 3306 bind-address = 0.0.0.0 skip-networking = 0 [mysqld] datadir = C:/Program Files/mysql-9.2.0-winx64/data 这个my.cnf里面是 1 2 3 4 5 [mysqld] port=3306 bind-address=127.0.0.1 # 或 0.0.0.0，如果需要远程访问 skip-networking=0 # 确保未禁用网络 datadir=&quot;C:\Program Files\mysql-9.2.0-winx64\data&quot; 我的这个文件”C:\Program Files\mysql-9.2.0-winx64\data\ibdata1”是要给完全控制的权限的！（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。并且还有这个文件”C:\Program Files\mysql-9.2.0-winx64\data”（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。 在你装的MySQL目录下C:\Program Files\mysql-9.2.0-winx64\data这里面找到这个文件.err文件，这里面就是一些报错日志，可以参考，发给AI… 如果权限正确但仍报错，可能是 ibdata1 被其他进程锁定： a. 打开“资源监视器”：按 Ctrl + Shift + Esc 打开任务管理器，点击“性能”选项卡，选择“资源监视器”。 b. 在“CPU”选项卡下，点击“关联的句柄”，搜索 ibdata1。 c. 如果有进程占用，结束该进程（通常是另一个 mysqld.exe 实例）。 还有就是检查MySQL服务是否启动， 启动MySQL： 1 net start mysql 关闭MySQL： 1 net stop mysql 按 Ctrl + Shift + Esc 打开任务管理器，点击“服务”选项卡，去找MySQL，去那里看是否有运行。 等等等等，许多许多各式各样的问题，这都是我遇到的，并一个个解决的，希望这篇能帮到你，让你少走点弯路，你避坑是我最痛苦的事情…OK，祝你不孕不育子孙满堂，谢谢(〃￣︶￣)人(￣︶￣〃) 注：以此篇记录我这一天痛苦的历程…" />
 <meta property="og:description" content="事因MySQL好久没用了，如何点开就打不开了，密码一致错…如何决心重装！ 问ChatGPT把原本留下的能删的都删了，重装后输入这个指令一直报错： PS C:\Users\33261&gt; mysql -u root ERROR 2003 (HY000): Can’t connect to MySQL server on ‘localhost:3306’ (10061) 一直报这个错，一直报这个错… 这个看似是端口问题，所以， 使用 netstat 检查端口占用情况：确保 3306 端口没有被其他应用占用： 1 cmd 1 netstat -ano | findstr :3306 结果上面之后问了AI就来到了最最最关键的代码了， mysqld –skip-grant-tables –console 1 mysqld --skip-grant-tables --console 这个代码是检查你MySQL遇到的问题的（以我的理解），接下来是我一直输密码一直错，问题改密码的命令，有很多改密码的命令，但这个好像才适合我的MySQL 9.2.0，然后我就运行了，改了，好像没啥用，密码还是输了就错…所以这个应该不是很重要， 直接设置明文密码 在 MySQL 9.2.0 中， authentication_string 可以直接存储明文密码，MySQL 会自动处理加密。运行以下命令： sql 收起取消自动换行复制 1 UPDATE mysql.user SET authentication_string = &#39;123456&#39; WHERE User = &#39;root&#39; AND Host = &#39;localhost&#39;; 注意：这里去掉了 PASSWORD() 函数，直接用明文 ‘123456’。 ‘123456’ 是你要设置的新密码，可以替换成其他密码。 然后这个代码也试试， 1 2 3 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;; FLUSH PRIVILEGES; EXIT; 最后， 1 mysql -u root -p 总结，就是你也遇到这个问题， 1 2 PS C:\Users\33261&gt; mysql -u root ERROR 2003 (HY000): Can&#39;t connect to MySQL server on &#39;localhost:3306&#39; (10061) 你就先输入这个命令， 1 mysqld --skip-grant-tables --console 来查询你遇到的具体问题，把这些问题给AI，然后一个个解决。 这里面就很多，我举例几个： 你的MySQL文件夹下没用这个my.ini或者my.cnf文件，这个是配置文件，你就自己创建，并且这两个我试了很久最后放置的是这样， 这个my.ini里面是 1 2 3 4 5 6 [mysqld] port = 3306 bind-address = 0.0.0.0 skip-networking = 0 [mysqld] datadir = C:/Program Files/mysql-9.2.0-winx64/data 这个my.cnf里面是 1 2 3 4 5 [mysqld] port=3306 bind-address=127.0.0.1 # 或 0.0.0.0，如果需要远程访问 skip-networking=0 # 确保未禁用网络 datadir=&quot;C:\Program Files\mysql-9.2.0-winx64\data&quot; 我的这个文件”C:\Program Files\mysql-9.2.0-winx64\data\ibdata1”是要给完全控制的权限的！（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。并且还有这个文件”C:\Program Files\mysql-9.2.0-winx64\data”（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。 在你装的MySQL目录下C:\Program Files\mysql-9.2.0-winx64\data这里面找到这个文件.err文件，这里面就是一些报错日志，可以参考，发给AI… 如果权限正确但仍报错，可能是 ibdata1 被其他进程锁定： a. 打开“资源监视器”：按 Ctrl + Shift + Esc 打开任务管理器，点击“性能”选项卡，选择“资源监视器”。 b. 在“CPU”选项卡下，点击“关联的句柄”，搜索 ibdata1。 c. 如果有进程占用，结束该进程（通常是另一个 mysqld.exe 实例）。 还有就是检查MySQL服务是否启动， 启动MySQL： 1 net start mysql 关闭MySQL： 1 net stop mysql 按 Ctrl + Shift + Esc 打开任务管理器，点击“服务”选项卡，去找MySQL，去那里看是否有运行。 等等等等，许多许多各式各样的问题，这都是我遇到的，并一个个解决的，希望这篇能帮到你，让你少走点弯路，你避坑是我最痛苦的事情…OK，祝你不孕不育子孙满堂，谢谢(〃￣︶￣)人(￣︶￣〃) 注：以此篇记录我这一天痛苦的历程…" />
@@ -43,9 +43,9 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="濮院男大居然重装了MySQL！并且还把重装后的问题全都解决了!" />
 <meta name="twitter:site" content="@twitter_username" />
-<meta name="twitter:creator" content="@TangZichuan" />
+<meta name="twitter:creator" content="@Tang Zichuan" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"TangZichuan"},"dateModified":"2025-03-15T00:00:00+08:00","datePublished":"2025-03-15T00:00:00+08:00","description":"事因MySQL好久没用了，如何点开就打不开了，密码一致错…如何决心重装！ 问ChatGPT把原本留下的能删的都删了，重装后输入这个指令一直报错： PS C:\\Users\\33261&gt; mysql -u root ERROR 2003 (HY000): Can’t connect to MySQL server on ‘localhost:3306’ (10061) 一直报这个错，一直报这个错… 这个看似是端口问题，所以， 使用 netstat 检查端口占用情况：确保 3306 端口没有被其他应用占用： 1 cmd 1 netstat -ano | findstr :3306 结果上面之后问了AI就来到了最最最关键的代码了， mysqld –skip-grant-tables –console 1 mysqld --skip-grant-tables --console 这个代码是检查你MySQL遇到的问题的（以我的理解），接下来是我一直输密码一直错，问题改密码的命令，有很多改密码的命令，但这个好像才适合我的MySQL 9.2.0，然后我就运行了，改了，好像没啥用，密码还是输了就错…所以这个应该不是很重要， 直接设置明文密码 在 MySQL 9.2.0 中， authentication_string 可以直接存储明文密码，MySQL 会自动处理加密。运行以下命令： sql 收起取消自动换行复制 1 UPDATE mysql.user SET authentication_string = &#39;123456&#39; WHERE User = &#39;root&#39; AND Host = &#39;localhost&#39;; 注意：这里去掉了 PASSWORD() 函数，直接用明文 ‘123456’。 ‘123456’ 是你要设置的新密码，可以替换成其他密码。 然后这个代码也试试， 1 2 3 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;; FLUSH PRIVILEGES; EXIT; 最后， 1 mysql -u root -p 总结，就是你也遇到这个问题， 1 2 PS C:\\Users\\33261&gt; mysql -u root ERROR 2003 (HY000): Can&#39;t connect to MySQL server on &#39;localhost:3306&#39; (10061) 你就先输入这个命令， 1 mysqld --skip-grant-tables --console 来查询你遇到的具体问题，把这些问题给AI，然后一个个解决。 这里面就很多，我举例几个： 你的MySQL文件夹下没用这个my.ini或者my.cnf文件，这个是配置文件，你就自己创建，并且这两个我试了很久最后放置的是这样， 这个my.ini里面是 1 2 3 4 5 6 [mysqld] port = 3306 bind-address = 0.0.0.0 skip-networking = 0 [mysqld] datadir = C:/Program Files/mysql-9.2.0-winx64/data 这个my.cnf里面是 1 2 3 4 5 [mysqld] port=3306 bind-address=127.0.0.1 # 或 0.0.0.0，如果需要远程访问 skip-networking=0 # 确保未禁用网络 datadir=&quot;C:\\Program Files\\mysql-9.2.0-winx64\\data&quot; 我的这个文件”C:\\Program Files\\mysql-9.2.0-winx64\\data\\ibdata1”是要给完全控制的权限的！（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。并且还有这个文件”C:\\Program Files\\mysql-9.2.0-winx64\\data”（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。 在你装的MySQL目录下C:\\Program Files\\mysql-9.2.0-winx64\\data这里面找到这个文件.err文件，这里面就是一些报错日志，可以参考，发给AI… 如果权限正确但仍报错，可能是 ibdata1 被其他进程锁定： a. 打开“资源监视器”：按 Ctrl + Shift + Esc 打开任务管理器，点击“性能”选项卡，选择“资源监视器”。 b. 在“CPU”选项卡下，点击“关联的句柄”，搜索 ibdata1。 c. 如果有进程占用，结束该进程（通常是另一个 mysqld.exe 实例）。 还有就是检查MySQL服务是否启动， 启动MySQL： 1 net start mysql 关闭MySQL： 1 net stop mysql 按 Ctrl + Shift + Esc 打开任务管理器，点击“服务”选项卡，去找MySQL，去那里看是否有运行。 等等等等，许多许多各式各样的问题，这都是我遇到的，并一个个解决的，希望这篇能帮到你，让你少走点弯路，你避坑是我最痛苦的事情…OK，祝你不孕不育子孙满堂，谢谢(〃￣︶￣)人(￣︶￣〃) 注：以此篇记录我这一天痛苦的历程…","headline":"濮院男大居然重装了MySQL！并且还把重装后的问题全都解决了!","mainEntityOfPage":{"@type":"WebPage","@id":"https://zichuantang.github.io/posts/%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL-%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!/"},"url":"https://zichuantang.github.io/posts/%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL-%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Tang Zichuan","url":"https://github.com/zichuantang"},"dateModified":"2025-03-15T00:00:00+08:00","datePublished":"2025-03-15T00:00:00+08:00","description":"事因MySQL好久没用了，如何点开就打不开了，密码一致错…如何决心重装！ 问ChatGPT把原本留下的能删的都删了，重装后输入这个指令一直报错： PS C:\\Users\\33261&gt; mysql -u root ERROR 2003 (HY000): Can’t connect to MySQL server on ‘localhost:3306’ (10061) 一直报这个错，一直报这个错… 这个看似是端口问题，所以， 使用 netstat 检查端口占用情况：确保 3306 端口没有被其他应用占用： 1 cmd 1 netstat -ano | findstr :3306 结果上面之后问了AI就来到了最最最关键的代码了， mysqld –skip-grant-tables –console 1 mysqld --skip-grant-tables --console 这个代码是检查你MySQL遇到的问题的（以我的理解），接下来是我一直输密码一直错，问题改密码的命令，有很多改密码的命令，但这个好像才适合我的MySQL 9.2.0，然后我就运行了，改了，好像没啥用，密码还是输了就错…所以这个应该不是很重要， 直接设置明文密码 在 MySQL 9.2.0 中， authentication_string 可以直接存储明文密码，MySQL 会自动处理加密。运行以下命令： sql 收起取消自动换行复制 1 UPDATE mysql.user SET authentication_string = &#39;123456&#39; WHERE User = &#39;root&#39; AND Host = &#39;localhost&#39;; 注意：这里去掉了 PASSWORD() 函数，直接用明文 ‘123456’。 ‘123456’ 是你要设置的新密码，可以替换成其他密码。 然后这个代码也试试， 1 2 3 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;; FLUSH PRIVILEGES; EXIT; 最后， 1 mysql -u root -p 总结，就是你也遇到这个问题， 1 2 PS C:\\Users\\33261&gt; mysql -u root ERROR 2003 (HY000): Can&#39;t connect to MySQL server on &#39;localhost:3306&#39; (10061) 你就先输入这个命令， 1 mysqld --skip-grant-tables --console 来查询你遇到的具体问题，把这些问题给AI，然后一个个解决。 这里面就很多，我举例几个： 你的MySQL文件夹下没用这个my.ini或者my.cnf文件，这个是配置文件，你就自己创建，并且这两个我试了很久最后放置的是这样， 这个my.ini里面是 1 2 3 4 5 6 [mysqld] port = 3306 bind-address = 0.0.0.0 skip-networking = 0 [mysqld] datadir = C:/Program Files/mysql-9.2.0-winx64/data 这个my.cnf里面是 1 2 3 4 5 [mysqld] port=3306 bind-address=127.0.0.1 # 或 0.0.0.0，如果需要远程访问 skip-networking=0 # 确保未禁用网络 datadir=&quot;C:\\Program Files\\mysql-9.2.0-winx64\\data&quot; 我的这个文件”C:\\Program Files\\mysql-9.2.0-winx64\\data\\ibdata1”是要给完全控制的权限的！（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。并且还有这个文件”C:\\Program Files\\mysql-9.2.0-winx64\\data”（参考这个地址找到你自己的），直接所有用户都给完全控制的权限。 在你装的MySQL目录下C:\\Program Files\\mysql-9.2.0-winx64\\data这里面找到这个文件.err文件，这里面就是一些报错日志，可以参考，发给AI… 如果权限正确但仍报错，可能是 ibdata1 被其他进程锁定： a. 打开“资源监视器”：按 Ctrl + Shift + Esc 打开任务管理器，点击“性能”选项卡，选择“资源监视器”。 b. 在“CPU”选项卡下，点击“关联的句柄”，搜索 ibdata1。 c. 如果有进程占用，结束该进程（通常是另一个 mysqld.exe 实例）。 还有就是检查MySQL服务是否启动， 启动MySQL： 1 net start mysql 关闭MySQL： 1 net stop mysql 按 Ctrl + Shift + Esc 打开任务管理器，点击“服务”选项卡，去找MySQL，去那里看是否有运行。 等等等等，许多许多各式各样的问题，这都是我遇到的，并一个个解决的，希望这篇能帮到你，让你少走点弯路，你避坑是我最痛苦的事情…OK，祝你不孕不育子孙满堂，谢谢(〃￣︶￣)人(￣︶￣〃) 注：以此篇记录我这一天痛苦的历程…","headline":"濮院男大居然重装了MySQL！并且还把重装后的问题全都解决了!","mainEntityOfPage":{"@type":"WebPage","@id":"https://zichuantang.github.io/posts/%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL-%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!/"},"url":"https://zichuantang.github.io/posts/%E6%BF%AE%E9%99%A2%E7%94%B7%E5%A4%A7%E5%B1%85%E7%84%B6%E9%87%8D%E8%A3%85%E4%BA%86MySQL-%E5%B9%B6%E4%B8%94%E8%BF%98%E6%8A%8A%E9%87%8D%E8%A3%85%E5%90%8E%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%A8%E9%83%BD%E8%A7%A3%E5%86%B3%E4%BA%86!/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,16 +215,9 @@
 
   
 
-  
-    
-
-    
-
-  
 
 
-
-  <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.13/dayjs.min.js,npm/dayjs@1.11.13/locale/zh.js,npm/dayjs@1.11.13/plugin/relativeTime.js,npm/dayjs@1.11.13/plugin/localizedFormat.js,npm/mermaid@11.4.0/dist/mermaid.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.13/dayjs.min.js,npm/dayjs@1.11.13/locale/zh.js,npm/dayjs@1.11.13/plugin/relativeTime.js,npm/dayjs@1.11.13/plugin/localizedFormat.js"></script>
 
 
 
@@ -600,7 +593,7 @@
           <em>
             
               
-                
+                <a href="https://github.com/zichuantang">Tang Zichuan</a>
                 
               
             
@@ -842,11 +835,22 @@ datadir="C:\Program Files\mysql-9.2.0-winx64\data"
       <div class="post-meta mb-3">
         <i class="far fa-folder-open fa-fw me-1"></i>
         
-          <a href="/categories/jekyll/">Jekyll</a>
+          <a href="/categories/%E5%8E%9F%E5%88%9B/">原创</a>,
+          <a href="/categories/%E5%81%A5%E8%BA%AB/">健身</a>
       </div>
     
 
     <!-- tags -->
+    
+      <div class="post-tags">
+        <i class="fa fa-tags fa-fw me-1"></i>
+        
+          <a
+            href="/tags/%E5%81%A5%E8%BA%AB/"
+            class="post-tag no-text-decoration"
+          >健身</a>
+        
+      </div>
     
 
     <div
@@ -1226,55 +1230,43 @@ datadir="C:\Program Files\mysql-9.2.0-winx64\data"
   
 
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
     
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   
 
   
@@ -1302,7 +1294,7 @@ datadir="C:\Program Files\mysql-9.2.0-winx64\data"
     <nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4">
       
         <article class="col">
-          <a href="/posts/%E5%BF%85%E8%A3%85/" class="post-preview card h-100">
+          <a href="/posts/%E5%81%A5%E8%BA%AB%E6%97%A5%E7%A8%8B/" class="post-preview card h-100">
             <div class="card-body">
               <!--
   Date format snippet
@@ -1314,23 +1306,23 @@ datadir="C:\Program Files\mysql-9.2.0-winx64\data"
 
 <time
   
-  data-ts="1743350400"
+  data-ts="1750003200"
   data-df="YYYY/MM/DD"
   
 >
-  2025/03/31
+  2025/06/16
 </time>
 
-              <h4 class="pt-0 my-2">必装</h4>
+              <h4 class="pt-0 my-2">健身-日程</h4>
               <div class="text-muted">
-                <p>Bandizip           微信           Google Chrome Grok/GHBK/莫老师/油猴/答题脚本           Visual Studio Code           IntelliJ IDEA           YesPlayMusic           SakuraCat           StartAllBack           ...</p>
+                <p>日期         事件                                 6月16日         没健身，商没好，还要考试下午要靠第二科了                       6月15日         没去健身，要军检，而且伤没好在莆田市中医药检查的两处要做手术费用估计要六七千哎                       6月14日         休息这天...</p>
               </div>
             </div>
           </a>
         </article>
       
         <article class="col">
-          <a href="/posts/%E4%B8%80%E7%82%B9%E9%97%AE%E9%A2%98/" class="post-preview card h-100">
+          <a href="/posts/%E5%85%A8%E9%9D%A2%E8%83%B8%E8%83%8C%E8%82%A9%E8%AE%AD%E7%BB%83%E6%8C%87%E5%8D%97-%E5%8A%A8%E4%BD%9C-%E6%8A%80%E5%B7%A7%E4%B8%8E%E7%A7%91%E5%AD%A6%E8%AE%A1%E5%88%92/" class="post-preview card h-100">
             <div class="card-body">
               <!--
   Date format snippet
@@ -1342,23 +1334,23 @@ datadir="C:\Program Files\mysql-9.2.0-winx64\data"
 
 <time
   
-  data-ts="1741968000"
+  data-ts="1744560000"
   data-df="YYYY/MM/DD"
   
 >
-  2025/03/15
+  2025/04/14
 </time>
 
-              <h4 class="pt-0 my-2">一点问题</h4>
+              <h4 class="pt-0 my-2">全面胸背肩训练指南：动作、技巧与科学计划</h4>
               <div class="text-muted">
-                <p>谁能教我这个怎么部署，我弄不出来啊啊啊————一个极简主义的个人网站，纸的纯净和雪的清新。（谁教会我我请他/她吃食堂(●ˇ∀ˇ●)）      像这种部署在GitHub上的静态网站有没有办法部署板娘啊，求解求解`(&amp;gt;﹏&amp;lt;)′   还有我这个网站怎么部署Typecho插件，感觉这玩意太好了吧┭┮﹏┭┮   【MySQL有问题重装了，并且正常使用】： 重装 MySQL 的步骤如下： ...</p>
+                <p>杠铃平板卧推技巧总结    杠铃平板卧推是锻炼胸大肌、肱三头肌和肩部肌群的经典动作。以下是一些技巧，帮助你安全、高效地完成动作：     正确姿势：            躺姿：平躺在卧推凳上，双脚稳稳踩地，臀部、背部和头部贴紧凳面。       肩胛收紧：肩胛骨向内收紧并下沉，形成稳定的支撑，保护肩关节。       握距：双手握杠，握距比肩稍宽（约1.5倍肩宽），手腕保持中立。     ...</p>
               </div>
             </div>
           </a>
         </article>
       
         <article class="col">
-          <a href="/posts/%E8%82%8C%E9%85%B8%E4%B8%8E%E8%84%B1%E5%8F%91%E5%85%B3%E7%B3%BB%E6%8E%A2%E8%AE%A8/" class="post-preview card h-100">
+          <a href="/posts/%E8%AE%AD%E7%BB%83-%E9%A5%AE%E9%A3%9F%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E7%BB%88%E6%9E%81%E6%8C%87%E5%8D%97/" class="post-preview card h-100">
             <div class="card-body">
               <!--
   Date format snippet
@@ -1370,16 +1362,16 @@ datadir="C:\Program Files\mysql-9.2.0-winx64\data"
 
 <time
   
-  data-ts="1741708800"
+  data-ts="1743523200"
   data-df="YYYY/MM/DD"
   
 >
-  2025/03/12
+  2025/04/02
 </time>
 
-              <h4 class="pt-0 my-2">肌酸与脱发关系探讨</h4>
+              <h4 class="pt-0 my-2">训练、饮食与恢复的终极指南</h4>
               <div class="text-muted">
-                <p>喝肌酸会掉头发吗？   关于肌酸（Creatine）是否会导致脱发的问题，目前的科学研究尚未明确证实二者之间存在直接因果关系。以下是相关信息的总结和分析，供参考：    1. 肌酸的作用与安全性    肌酸是一种天然存在于人体中的氨基酸衍生物，主要作用是帮助肌肉细胞快速生成能量（ATP），常用于提升运动表现、增加肌肉力量和恢复速度。   安全性：长期研究显示，短期（5年以内）按推荐剂量（每天...</p>
+                <p>1. 训练技巧          渐进超负荷（Progressive Overload） 这是增肌的基石。逐渐增加重量、次数或训练强度，确保肌肉不断受到挑战。例如，每周尝试增加2.5-5公斤的负重，或者多做1-2次重复。           复合动作优先 冠军们通常以复合动作（如深蹲、硬拉、卧推、引体向上）为核心，因为这些动作能同时刺激多个肌群，促进整体生长。孤立动作（如二头弯举）用于辅助。...</p>
               </div>
             </div>
           </a>
