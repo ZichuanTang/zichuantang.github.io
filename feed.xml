@@ -4,7 +4,7 @@
   <id>https://zichuantang.github.io/</id>
   <title>子传的博客</title>
   <subtitle>一个极简、响应式且功能丰富的 Jekyll 主题，用于技术写作。</subtitle>
-  <updated>2025-06-25T02:17:09+08:00</updated>
+  <updated>2025-06-25T20:01:05+08:00</updated>
   <author>
     <name>唐子传</name>
     <uri>https://zichuantang.github.io/</uri>
@@ -34,7 +34,9 @@
 
   
     
-    <category term="Jekyll" />
+    <category term="原创" />
+    
+    <category term="健身" />
     
   
 
