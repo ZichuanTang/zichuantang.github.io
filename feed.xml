@@ -4,7 +4,7 @@
   <id>https://zichuantang.github.io/</id>
   <title>子传的博客</title>
   <subtitle>一个极简、响应式且功能丰富的 Jekyll 主题，用于技术写作。</subtitle>
-  <updated>2025-06-25T20:30:40+08:00</updated>
+  <updated>2025-06-25T20:31:05+08:00</updated>
   <author>
     <name>唐子传</name>
     <uri>https://zichuantang.github.io/</uri>
@@ -133,12 +133,14 @@
     <id>https://zichuantang.github.io/posts/%E5%BF%85%E8%A3%85/</id>
     <content type="text/html" src="https://zichuantang.github.io/posts/%E5%BF%85%E8%A3%85/" />
     <author>
-      <name>TangZichuan</name>
+      <name>tzc</name>
     </author>
 
   
     
-    <category term="Jekyll" />
+    <category term="原创" />
+    
+    <category term="个人" />
     
   
 
