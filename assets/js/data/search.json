@@ -10,8 +10,8 @@
   {
     "title": "安装 Chirpy 主题",
     "url": "/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/",
-    "categories": "Jekyll",
-    "tags": "",
+    "categories": "原创, 学习",
+    "tags": "学习",
     "date": "2025-04-21 00:00:00 +0800",
     "content": "从你的命令行输出看，你尝试运行 npm install 来安装 Chirpy 主题的前端依赖，但遇到了一些警告（EBADENGINE Unsupported engine），不过最终依赖还是成功安装了（added 667 packages）。以下是对输出的分析和后续步骤的建议，帮助你解决图片模糊问题并确保网站功能正常。    命令和输出分析     命令：cd C:\Users\33261\..."
   },
