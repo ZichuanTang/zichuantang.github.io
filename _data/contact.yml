@@ -3,16 +3,20 @@
 - type: github
   icon: "fab fa-github"
 
-- type: twitter
-  icon: "fa-brands fa-x-twitter"
-
-- type: email
-  icon: "fas fa-envelope"
+- type: tiktok
+  icon: "fa-brands fa-tiktok"
+  url: "https://www.douyin.com/user/self?from_tab_name=main&showTab=post" # 抖音
   noblank: true # open link in current tab
 
-- type: rss
-  icon: "fas fa-rss"
-  noblank: true
+- type: bilibili
+  icon: "fa-brands fa-bilibili"
+  url: "https://space.bilibili.com/1944350495" # 哔哩哔哩
+  noblank: true # open link in current tab
+
+- type: zhihu
+  icon: "fa-brands fa-zhihu"
+  url: "https://www.zhihu.com/people/tiamo-25-21-86" # 知乎
+  noblank: true # open link in current tab
 # Uncomment and complete the url below to enable more contact options
 #
 # - type: mastodon
