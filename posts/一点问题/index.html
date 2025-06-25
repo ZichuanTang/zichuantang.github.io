@@ -31,7 +31,7 @@
   <!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="一点问题" />
-<meta name="author" content="TangZichuan" />
+<meta name="author" content="Tang Zichuan" />
 <meta property="og:locale" content="zh_CN" />
 <meta name="description" content="谁能教我这个怎么部署，我弄不出来啊啊啊————一个极简主义的个人网站，纸的纯净和雪的清新。（谁教会我我请他/她吃食堂(●ˇ∀ˇ●)） 像这种部署在GitHub上的静态网站有没有办法部署板娘啊，求解求解`(&gt;﹏&lt;)′ 还有我这个网站怎么部署Typecho插件，感觉这玩意太好了吧┭┮﹏┭┮ 【MySQL有问题重装了，并且正常使用】： 重装 MySQL 的步骤如下： 卸载 MySQL Windows: 打开 “控制面板” &gt; “程序和功能”，找到 MySQL 相关程序并卸载。 删除 C:\Program Files\MySQL\ （和 C:\ProgramData\MySQL\ 目录。） 删除注册表项（regedit，找到 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MySQL 并删除）。 重新安装 MySQL Windows: 下载 MySQL 安装包 MySQL 官网 并安装。(https://dev.mysql.com/downloads/mysql/) 步骤1：停止MySQL服务 首先，需要停止正在运行的MySQL服务。在Windows上，可以通过命令提示符（以管理员身份运行）执行以下命令： net stop mysql 步骤2：跳过密码验证启动MySQL 接下来，需要以跳过权限表的方式启动MySQL，这样可以无需密码登录。在Windows上，打开命令提示符并执行以下命令： mysqld –console –skip-grant-tables –shared-memory 步骤3：重置密码 打开一个新的命令提示符窗口（不要关闭之前的窗口），并进入MySQL的bin目录，然后执行以下命令登录MySQL： mysql 接着，选择MySQL数据库： use mysql; 然后，执行以下命令修改root用户的密码： UPDATE user SET authentication_string=PASSWORD(‘新密码’) WHERE User=’root’; 对于MySQL 5.7以前的版本，可以使用以下命令： UPDATE user SET password=PASSWORD(‘新密码’) WHERE User=’root’; 启动MySQL： net start mysql 关闭MySQL： net stop mysql" />
 <meta property="og:description" content="谁能教我这个怎么部署，我弄不出来啊啊啊————一个极简主义的个人网站，纸的纯净和雪的清新。（谁教会我我请他/她吃食堂(●ˇ∀ˇ●)） 像这种部署在GitHub上的静态网站有没有办法部署板娘啊，求解求解`(&gt;﹏&lt;)′ 还有我这个网站怎么部署Typecho插件，感觉这玩意太好了吧┭┮﹏┭┮ 【MySQL有问题重装了，并且正常使用】： 重装 MySQL 的步骤如下： 卸载 MySQL Windows: 打开 “控制面板” &gt; “程序和功能”，找到 MySQL 相关程序并卸载。 删除 C:\Program Files\MySQL\ （和 C:\ProgramData\MySQL\ 目录。） 删除注册表项（regedit，找到 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MySQL 并删除）。 重新安装 MySQL Windows: 下载 MySQL 安装包 MySQL 官网 并安装。(https://dev.mysql.com/downloads/mysql/) 步骤1：停止MySQL服务 首先，需要停止正在运行的MySQL服务。在Windows上，可以通过命令提示符（以管理员身份运行）执行以下命令： net stop mysql 步骤2：跳过密码验证启动MySQL 接下来，需要以跳过权限表的方式启动MySQL，这样可以无需密码登录。在Windows上，打开命令提示符并执行以下命令： mysqld –console –skip-grant-tables –shared-memory 步骤3：重置密码 打开一个新的命令提示符窗口（不要关闭之前的窗口），并进入MySQL的bin目录，然后执行以下命令登录MySQL： mysql 接着，选择MySQL数据库： use mysql; 然后，执行以下命令修改root用户的密码： UPDATE user SET authentication_string=PASSWORD(‘新密码’) WHERE User=’root’; 对于MySQL 5.7以前的版本，可以使用以下命令： UPDATE user SET password=PASSWORD(‘新密码’) WHERE User=’root’; 启动MySQL： net start mysql 关闭MySQL： net stop mysql" />
@@ -43,9 +43,9 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="一点问题" />
 <meta name="twitter:site" content="@twitter_username" />
-<meta name="twitter:creator" content="@TangZichuan" />
+<meta name="twitter:creator" content="@Tang Zichuan" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"TangZichuan"},"dateModified":"2025-03-15T00:00:00+08:00","datePublished":"2025-03-15T00:00:00+08:00","description":"谁能教我这个怎么部署，我弄不出来啊啊啊————一个极简主义的个人网站，纸的纯净和雪的清新。（谁教会我我请他/她吃食堂(●ˇ∀ˇ●)） 像这种部署在GitHub上的静态网站有没有办法部署板娘啊，求解求解`(&gt;﹏&lt;)′ 还有我这个网站怎么部署Typecho插件，感觉这玩意太好了吧┭┮﹏┭┮ 【MySQL有问题重装了，并且正常使用】： 重装 MySQL 的步骤如下： 卸载 MySQL Windows: 打开 “控制面板” &gt; “程序和功能”，找到 MySQL 相关程序并卸载。 删除 C:\\Program Files\\MySQL\\ （和 C:\\ProgramData\\MySQL\\ 目录。） 删除注册表项（regedit，找到 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\MySQL 并删除）。 重新安装 MySQL Windows: 下载 MySQL 安装包 MySQL 官网 并安装。(https://dev.mysql.com/downloads/mysql/) 步骤1：停止MySQL服务 首先，需要停止正在运行的MySQL服务。在Windows上，可以通过命令提示符（以管理员身份运行）执行以下命令： net stop mysql 步骤2：跳过密码验证启动MySQL 接下来，需要以跳过权限表的方式启动MySQL，这样可以无需密码登录。在Windows上，打开命令提示符并执行以下命令： mysqld –console –skip-grant-tables –shared-memory 步骤3：重置密码 打开一个新的命令提示符窗口（不要关闭之前的窗口），并进入MySQL的bin目录，然后执行以下命令登录MySQL： mysql 接着，选择MySQL数据库： use mysql; 然后，执行以下命令修改root用户的密码： UPDATE user SET authentication_string=PASSWORD(‘新密码’) WHERE User=’root’; 对于MySQL 5.7以前的版本，可以使用以下命令： UPDATE user SET password=PASSWORD(‘新密码’) WHERE User=’root’; 启动MySQL： net start mysql 关闭MySQL： net stop mysql","headline":"一点问题","mainEntityOfPage":{"@type":"WebPage","@id":"https://zichuantang.github.io/posts/%E4%B8%80%E7%82%B9%E9%97%AE%E9%A2%98/"},"url":"https://zichuantang.github.io/posts/%E4%B8%80%E7%82%B9%E9%97%AE%E9%A2%98/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Tang Zichuan","url":"https://github.com/zichuantang"},"dateModified":"2025-03-15T00:00:00+08:00","datePublished":"2025-03-15T00:00:00+08:00","description":"谁能教我这个怎么部署，我弄不出来啊啊啊————一个极简主义的个人网站，纸的纯净和雪的清新。（谁教会我我请他/她吃食堂(●ˇ∀ˇ●)） 像这种部署在GitHub上的静态网站有没有办法部署板娘啊，求解求解`(&gt;﹏&lt;)′ 还有我这个网站怎么部署Typecho插件，感觉这玩意太好了吧┭┮﹏┭┮ 【MySQL有问题重装了，并且正常使用】： 重装 MySQL 的步骤如下： 卸载 MySQL Windows: 打开 “控制面板” &gt; “程序和功能”，找到 MySQL 相关程序并卸载。 删除 C:\\Program Files\\MySQL\\ （和 C:\\ProgramData\\MySQL\\ 目录。） 删除注册表项（regedit，找到 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\MySQL 并删除）。 重新安装 MySQL Windows: 下载 MySQL 安装包 MySQL 官网 并安装。(https://dev.mysql.com/downloads/mysql/) 步骤1：停止MySQL服务 首先，需要停止正在运行的MySQL服务。在Windows上，可以通过命令提示符（以管理员身份运行）执行以下命令： net stop mysql 步骤2：跳过密码验证启动MySQL 接下来，需要以跳过权限表的方式启动MySQL，这样可以无需密码登录。在Windows上，打开命令提示符并执行以下命令： mysqld –console –skip-grant-tables –shared-memory 步骤3：重置密码 打开一个新的命令提示符窗口（不要关闭之前的窗口），并进入MySQL的bin目录，然后执行以下命令登录MySQL： mysql 接着，选择MySQL数据库： use mysql; 然后，执行以下命令修改root用户的密码： UPDATE user SET authentication_string=PASSWORD(‘新密码’) WHERE User=’root’; 对于MySQL 5.7以前的版本，可以使用以下命令： UPDATE user SET password=PASSWORD(‘新密码’) WHERE User=’root’; 启动MySQL： net start mysql 关闭MySQL： net stop mysql","headline":"一点问题","mainEntityOfPage":{"@type":"WebPage","@id":"https://zichuantang.github.io/posts/%E4%B8%80%E7%82%B9%E9%97%AE%E9%A2%98/"},"url":"https://zichuantang.github.io/posts/%E4%B8%80%E7%82%B9%E9%97%AE%E9%A2%98/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,16 +215,9 @@
 
   
 
-  
-    
-
-    
-
-  
 
 
-
-  <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.13/dayjs.min.js,npm/dayjs@1.11.13/locale/zh.js,npm/dayjs@1.11.13/plugin/relativeTime.js,npm/dayjs@1.11.13/plugin/localizedFormat.js,npm/mermaid@11.4.0/dist/mermaid.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.13/dayjs.min.js,npm/dayjs@1.11.13/locale/zh.js,npm/dayjs@1.11.13/plugin/relativeTime.js,npm/dayjs@1.11.13/plugin/localizedFormat.js"></script>
 
 
 
@@ -600,7 +593,7 @@
           <em>
             
               
-                
+                <a href="https://github.com/zichuantang">Tang Zichuan</a>
                 
               
             
@@ -721,11 +714,22 @@ net stop mysql</p>
       <div class="post-meta mb-3">
         <i class="far fa-folder-open fa-fw me-1"></i>
         
-          <a href="/categories/jekyll/">Jekyll</a>
+          <a href="/categories/%E5%8E%9F%E5%88%9B/">原创</a>,
+          <a href="/categories/%E4%B8%AA%E4%BA%BA/">个人</a>
       </div>
     
 
     <!-- tags -->
+    
+      <div class="post-tags">
+        <i class="fa fa-tags fa-fw me-1"></i>
+        
+          <a
+            href="/tags/%E4%B8%AA%E4%BA%BA/"
+            class="post-tag no-text-decoration"
+          >个人</a>
+        
+      </div>
     
 
     <div
@@ -905,10 +909,6 @@ net stop mysql</p>
     
     
     
-      
-        
-        
-
   
     
     
@@ -924,23 +924,9 @@ net stop mysql</p>
     
     
       
-    
-  
-    
-    
-    
-    
-      
         
         
 
-  
-    
-    
-    
-    
-      
-    
   
     
     
@@ -977,6 +963,29 @@ net stop mysql</p>
     
     
       
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
     
   
     
@@ -987,6 +996,50 @@ net stop mysql</p>
         
         
 
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
   
     
     
@@ -1051,6 +1104,9 @@ net stop mysql</p>
         <a class="post-tag btn btn-outline-primary" href="/tags/writing/">writing</a>
       
         
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E4%B8%AA%E4%BA%BA/">个人</a>
+      
+        
         <a class="post-tag btn btn-outline-primary" href="/tags/%E5%AD%A6%E4%B9%A0/">学习</a>
       
     </div>
@@ -1105,43 +1161,55 @@ net stop mysql</p>
   
 
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
     
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   
 
   
@@ -1169,7 +1237,7 @@ net stop mysql</p>
     <nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4">
       
         <article class="col">
-          <a href="/posts/%E5%BF%85%E8%A3%85/" class="post-preview card h-100">
+          <a href="/posts/%E5%81%A5%E8%BA%AB%E6%97%A5%E7%A8%8B/" class="post-preview card h-100">
             <div class="card-body">
               <!--
   Date format snippet
@@ -1181,23 +1249,23 @@ net stop mysql</p>
 
 <time
   
-  data-ts="1743350400"
+  data-ts="1750003200"
   data-df="YYYY/MM/DD"
   
 >
-  2025/03/31
+  2025/06/16
 </time>
 
-              <h4 class="pt-0 my-2">必装</h4>
+              <h4 class="pt-0 my-2">健身-日程</h4>
               <div class="text-muted">
-                <p>Bandizip           微信           Google Chrome Grok/GHBK/莫老师/油猴/答题脚本           Visual Studio Code           IntelliJ IDEA           YesPlayMusic           SakuraCat           StartAllBack           ...</p>
+                <p>日期         事件                                 6月16日         没健身，商没好，还要考试下午要靠第二科了                       6月15日         没去健身，要军检，而且伤没好在莆田市中医药检查的两处要做手术费用估计要六七千哎                       6月14日         休息这天...</p>
               </div>
             </div>
           </a>
         </article>
       
         <article class="col">
-          <a href="/posts/%E8%82%8C%E9%85%B8%E4%B8%8E%E8%84%B1%E5%8F%91%E5%85%B3%E7%B3%BB%E6%8E%A2%E8%AE%A8/" class="post-preview card h-100">
+          <a href="/posts/%E5%AE%89%E8%A3%85-Chirpy-%E4%B8%BB%E9%A2%98/" class="post-preview card h-100">
             <div class="card-body">
               <!--
   Date format snippet
@@ -1209,23 +1277,23 @@ net stop mysql</p>
 
 <time
   
-  data-ts="1741708800"
+  data-ts="1745164800"
   data-df="YYYY/MM/DD"
   
 >
-  2025/03/12
+  2025/04/21
 </time>
 
-              <h4 class="pt-0 my-2">肌酸与脱发关系探讨</h4>
+              <h4 class="pt-0 my-2">安装 Chirpy 主题</h4>
               <div class="text-muted">
-                <p>喝肌酸会掉头发吗？   关于肌酸（Creatine）是否会导致脱发的问题，目前的科学研究尚未明确证实二者之间存在直接因果关系。以下是相关信息的总结和分析，供参考：    1. 肌酸的作用与安全性    肌酸是一种天然存在于人体中的氨基酸衍生物，主要作用是帮助肌肉细胞快速生成能量（ATP），常用于提升运动表现、增加肌肉力量和恢复速度。   安全性：长期研究显示，短期（5年以内）按推荐剂量（每天...</p>
+                <p>从你的命令行输出看，你尝试运行 npm install 来安装 Chirpy 主题的前端依赖，但遇到了一些警告（EBADENGINE Unsupported engine），不过最终依赖还是成功安装了（added 667 packages）。以下是对输出的分析和后续步骤的建议，帮助你解决图片模糊问题并确保网站功能正常。    命令和输出分析     命令：cd C:\Users\33261\...</p>
               </div>
             </div>
           </a>
         </article>
       
         <article class="col">
-          <a href="/posts/%E5%A2%9E%E8%82%8C%E8%AE%AD%E7%BB%83-%E5%A4%A7%E9%87%8D%E9%87%8F%E4%B8%8E%E4%B8%AD%E7%AD%89%E9%87%8D%E9%87%8F%E7%9A%84%E9%80%89%E6%8B%A9/" class="post-preview card h-100">
+          <a href="/posts/%E5%85%A8%E9%9D%A2%E8%83%B8%E8%83%8C%E8%82%A9%E8%AE%AD%E7%BB%83%E6%8C%87%E5%8D%97-%E5%8A%A8%E4%BD%9C-%E6%8A%80%E5%B7%A7%E4%B8%8E%E7%A7%91%E5%AD%A6%E8%AE%A1%E5%88%92/" class="post-preview card h-100">
             <div class="card-body">
               <!--
   Date format snippet
@@ -1237,16 +1305,16 @@ net stop mysql</p>
 
 <time
   
-  data-ts="1741708800"
+  data-ts="1744560000"
   data-df="YYYY/MM/DD"
   
 >
-  2025/03/12
+  2025/04/14
 </time>
 
-              <h4 class="pt-0 my-2">增肌训练：大重量与中等重量的选择</h4>
+              <h4 class="pt-0 my-2">全面胸背肩训练指南：动作、技巧与科学计划</h4>
               <div class="text-muted">
-                <p>增肌训练：大重量与中等重量的选择   增肌（肌肥大）的训练方式选择（大重量 vs. 适当重量做组）取决于你的训练目标、身体适应性以及科学原理的支持。以下是具体的分析：    1. 大重量低次数（1-6RM）    优势：            神经适应主导：提升肌肉力量和神经募集能力，尤其是激活快肌纤维（II型肌纤维），这类肌纤维的增粗潜力更大。       机械张力：大重量通过高强度的机械...</p>
+                <p>杠铃平板卧推技巧总结    杠铃平板卧推是锻炼胸大肌、肱三头肌和肩部肌群的经典动作。以下是一些技巧，帮助你安全、高效地完成动作：     正确姿势：            躺姿：平躺在卧推凳上，双脚稳稳踩地，臀部、背部和头部贴紧凳面。       肩胛收紧：肩胛骨向内收紧并下沉，形成稳定的支撑，保护肩关节。       握距：双手握杠，握距比肩稍宽（约1.5倍肩宽），手腕保持中立。     ...</p>
               </div>
             </div>
           </a>
@@ -1376,10 +1444,6 @@ net stop mysql</p>
     
     
     
-      
-        
-        
-
   
     
     
@@ -1395,23 +1459,9 @@ net stop mysql</p>
     
     
       
-    
-  
-    
-    
-    
-    
-      
         
         
 
-  
-    
-    
-    
-    
-      
-    
   
     
     
@@ -1448,6 +1498,29 @@ net stop mysql</p>
     
     
       
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
     
   
     
@@ -1458,6 +1531,50 @@ net stop mysql</p>
         
         
 
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
   
     
     
@@ -1520,6 +1637,9 @@ net stop mysql</p>
       
         
         <a class="post-tag btn btn-outline-primary" href="/tags/writing/">writing</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E4%B8%AA%E4%BA%BA/">个人</a>
       
         
         <a class="post-tag btn btn-outline-primary" href="/tags/%E5%AD%A6%E4%B9%A0/">学习</a>
