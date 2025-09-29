@@ -11,7 +11,7 @@ jobs:
       pages: write     # 授予 Pages 写权限
       id-token: write  # 允许使用 OIDC token（可选，但推荐）
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1  # 根据 Chirpy 主题的要求，调整 Ruby 版本
@@ -19,7 +19,7 @@ jobs:
           gem install bundler
           bundle install
           bundle exec jekyll build
-      - uses: peaceiris/actions-gh-pages@v3
+      - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认 token
           publish_dir: ./_site
